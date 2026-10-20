@@ -1,1 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101110">
+  <meta name="description"
+    content="Portfólio de Miguel Coral, desenvolvedor de jogos com Unreal Engine 5 e Blueprints.">
+  <title>Miguel Coral — Game Developer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Miguel Coral, início">
+        <span class="brand-mark">MC.</span>
+        <span class="brand-name">MIGUEL CORAL
+          <span class="brand-role">Game Developer</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="#home">Início</a>
+        <a href="#projects">Projetos</a>
+        <a href="#about">Sobre</a>
+        <a href="#other-work">Outros trabalhos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="eyebrow mono">
+            <span class="status-dot"></span>
+            PORTFÓLIO DE DESENVOLVIMENTO DE JOGOS
+          </div>
+
+          <h1>Ideias que<br>ganham <span class="highlight">vida.</span></h1>
+
+          <p class="hero-description">
+            Sou Miguel Coral, desenvolvedor de jogos com foco em
+            Unreal Engine e Blueprints. Gosto de transformar ideias
+            em mecânicas interativas e experiências jogáveis.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="button-primary">Explorar projetos <span>↘</span></a>
+            <a href="#about" class="text-link">Um pouco sobre mim →</a>
+          </div>
+        </div>
+
+
+        <a href="pirata.html" class="hero-art" aria-label="Conheça o projeto Pirata">
+          <video class="hero-loop-video" autoplay muted loop playsinline preload="metadata"
+            aria-label="Trecho de gameplay do jogo Pirata em reprodução contínua">
+            <source src="assets/pirate/videos/pirateVideo.mp4" type="video/mp4">
+          </video>
+
+          <div class="hero-art-overlay"></div>
+
+          <div class="hero-art-top mono">
+            <span>PROJETO EM DESTAQUE</span>
+            <span>001 / GAMEPLAY</span>
+          </div>
+
+          <div class="hero-art-bottom">
+            <span class="mono">UNREAL ENGINE 5</span>
+            <span class="hero-art-title">PIRATA<span>.</span></span>
+            <span class="hero-art-caption">Exploração · Combate · Sobrevivência</span>
+            <span class="hero-art-cta">Conhecer projeto ↗</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <div class="tech-strip">
+      <div class="container tech-inner">
+        <span class="tech-label mono">FOCO TÉCNICO</span>
+        <span class="tech-item"><span>✳</span> Unreal Engine 5</span>
+        <span class="tech-item"><span>✳</span> Blueprint Visual Scripting</span>
+        <span class="tech-item"><span>✳</span> Gameplay Systems</span>
+      </div>
+    </div>
+
+    <section class="section projects-section" id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-label mono">01 / PROJETOS</p>
+            <h2>Projetos em destaque.</h2>
+          </div>
+          <p class="section-intro">
+            Jogos e experiências interativas desenvolvidas durante
+            minha trajetória de aprendizado e criação.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <a href="pirata.html" class="project-tile">
+            <div class="tile-image">
+              <img src="assets/pirate/images/navio.png" alt="Navio do jogo Pirata" loading="lazy">
+              <span class="tile-number mono">PROJETO 001</span>
+              <span class="tile-arrow" aria-hidden="true">↗</span>
+              <span class="tile-title">PIRATA<span>.</span></span>
+            </div>
+
+            <div class="tile-content">
+              <div>
+                <h3>Pirata</h3>
+                <p>Combate, inimigos e interação em um jogo desenvolvido na Unreal Engine 5.</p>
+              </div>
+              <span class="tile-open mono">VER PROJETO ↗</span>
+              <div class="tags">
+                <span class="tag">UNREAL ENGINE 5</span>
+                <span class="tag">BLUEPRINTS</span>
+                <span class="tag">GAMEPLAY</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Adicione novos jogos duplicando um project-tile
+               e trocando o link, a imagem e as informações. -->
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="container about-grid">
+        <div>
+          <p class="section-label mono">02 / SOBRE</p>
+          <h2>Aprender.<br>Construir.<br>Iterar.</h2>
+        </div>
+
+        <div class="about-copy">
+          <p>
+            Estou desenvolvendo minhas habilidades na criação de jogos,
+            com foco em programação visual, implementação de mecânicas
+            e construção de sistemas na Unreal Engine.
+          </p>
+          <p>
+            No projeto Pirata, trabalhei com Blueprints para implementar
+            sistemas de combate, gerenciamento de ondas de inimigos,
+            interações com objetos e condições de vitória e derrota.
+            O projeto foi desenvolvido em contexto de curso, com orientação
+            e utilização de alguns assets gratuitos disponibilizados
+            durante o aprendizado.
+          </p>
+
+          <div class="about-highlight">
+            <span class="about-highlight-mark">MC.</span>
+            <div>
+              <strong>Desenvolvimento de jogos</strong>
+              <span>Unreal Engine 5 · Blueprints · Gameplay Systems</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section other-work" id="other-work">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-label mono">03 / OUTROS TRABALHOS</p>
+            <h2>Além dos jogos.</h2>
+          </div>
+          <p class="section-intro">
+            Outros projetos que demonstram minha experiência com
+            desenvolvimento de software, sistemas e aplicações.
+          </p>
+        </div>
+
+        <a href="lotus-app.html" class="other-project-card">
+          <div class="other-project-visual">
+            <div class="lotus-window">
+              <div class="lotus-window-bar">
+                <span></span><span></span><span></span>
+                <p>LOTUS APP</p>
+              </div>
+              <div class="lotus-window-content">
+                <div class="lotus-sidebar">
+                  <span class="lotus-sidebar-logo">L.</span>
+                  <span class="lotus-sidebar-line active"></span>
+                  <span class="lotus-sidebar-line"></span>
+                  <span class="lotus-sidebar-line"></span>
+                  <span class="lotus-sidebar-line"></span>
+                </div>
+                <div class="lotus-dashboard">
+                  <span class="lotus-dash-label">VISÃO GERAL</span>
+                  <div class="lotus-dash-title"></div>
+                  <div class="lotus-dash-cards"><span></span><span></span><span></span></div>
+                  <div class="lotus-dash-chart">
+                    <i></i><i></i><i></i><i></i><i></i><i></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="lotus-visual-caption mono">SOFTWARE · DESKTOP APP</span>
+          </div>
+
+          <div class="other-project-content">
+            <p class="project-type mono">APLICAÇÃO DESKTOP / 001</p>
+            <h3>Lotus App</h3>
+            <p>
+              Aplicativo desktop de gestão comercial que centraliza produtos,
+              estoque, vendas, pagamentos, clientes, dívidas e relatórios.
+              O projeto demonstra organização de regras de negócio,
+              persistência de dados e integração entre interface e backend.
+            </p>
+            <div class="tags">
+              <span class="tag">ELECTRON</span>
+              <span class="tag">NODE.JS</span>
+              <span class="tag">CHROMIUM</span>
+              <span class="tag">SQLITE</span>
+            </div>
+            <span class="project-link">Ver detalhes do projeto <span>↗</span></span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-name">MIGUEL CORAL<span>.</span></p>
+        <p class="footer-copy">© 2026 · Portfólio de desenvolvimento de jogos</p>
+      </div>
+      <a class="footer-top" href="#home">Voltar ao topo ↑</a>
+    </div>
+  </footer>
+</body>
+
+</html>
