@@ -19,37 +19,77 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    elementCards.forEach((card, index) => {
-        card.addEventListener("click", () => {
-            elementCards.forEach((item) => {
-                item.classList.remove("is-active");
-            });
+    if (!window.WaveSystem) {
+        console.error(
+            "WaveSystem não foi carregado. Verifique o script wave-system.js no HTML."
+        );
+        return;
+    }
 
-            card.classList.add("is-active");
+    // ==========================================
+    // INICIALIZA O WAVE SYSTEM
+    // ==========================================
 
-            detailTitle.textContent =
-                card.dataset.title || "Elemento do jogo";
+    const firstCard = elementCards[0];
 
-            detailDescription.textContent =
-                card.dataset.description || "Descrição em breve.";
+    window.WaveSystem.init(elementCards);
 
-            detailIndex.textContent =
-                `${String(index + 1).padStart(2, "0")} / ` +
-                `${String(elementCards.length).padStart(2, "0")}`;
+    // ==========================================
+    // SELEÇÃO DOS CARDS
+    // ==========================================
 
+    function selectElement(card, index, shouldScroll = true) {
+        elementCards.forEach((item) => {
+            item.classList.remove("is-active");
+        });
+
+        card.classList.add("is-active");
+
+        detailTitle.textContent =
+            card.dataset.title || "Elemento do jogo";
+
+        detailDescription.textContent =
+            card.dataset.description || "Descrição em breve.";
+
+        detailIndex.textContent =
+            `${String(index + 1).padStart(2, "0")} / ` +
+            `${String(elementCards.length).padStart(2, "0")}`;
+
+        if (index === 0) {
+            window.WaveSystem.render(detailMedia);
+        } else {
+            detailMedia.classList.remove("wave-system-media");
             detailMedia.replaceChildren();
 
             const placeholder = document.createElement("span");
+
             placeholder.className = "mono";
             placeholder.textContent = "ANIMAÇÃO / GIF EM BREVE";
 
             detailMedia.appendChild(placeholder);
+        }
 
-            // Rola suavemente até os detalhes do elemento selecionado.
+        if (shouldScroll) {
             detailSection.scrollIntoView({
                 behavior: "smooth",
                 block: "center"
             });
+        }
+    }
+
+    // ==========================================
+    // EVENTOS DOS CARDS
+    // ==========================================
+
+    elementCards.forEach((card, index) => {
+        card.addEventListener("click", () => {
+            selectElement(card, index);
         });
     });
+
+    // ==========================================
+    // ESTADO INICIAL
+    // ==========================================
+
+    selectElement(firstCard, 0, false);
 });
