@@ -136,6 +136,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 `Abrir apresentação ampliada: ${item.title}`
             );
 
+            // O clique abre a apresentação ampliada
+            // (ver js/video-presentation.js).
+            Object.assign(video.dataset, {
+                presentation: "",
+                title: item.title,
+                summary: waveSystem.presentationSummary,
+                extra: waveSystem.presentationExtra,
+                eyebrow: "DETALHES DO SISTEMA",
+                context: `${waveSystem.title.toUpperCase()} / PRESENTATION`,
+                label: item.label,
+                number: item.number,
+                total: String(waveSystem.videos.length),
+                footer: "MIGUEL CORAL · UNREAL ENGINE 5"
+            });
+
             const source = document.createElement("source");
 
             source.src = `../assets/pirate/videos/${item.file}`;
@@ -148,46 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Seu navegador não suporta a reprodução de vídeo."
                 )
             );
-
-            // ABRE A APRESENTAÇÃO AMPLIADA
-
-            video.addEventListener("click", (event) => {
-                event.preventDefault();
-
-                // Impede o player original de disputar a reprodução
-                // com o vídeo da apresentação ampliada.
-                video.pause();
-
-                if (!window.VideoPresentation) {
-                    console.error(
-                        "VideoPresentation não foi carregado. " +
-                        "Verifique o script video-presentation.js no HTML."
-                    );
-                    return;
-                }
-
-                window.VideoPresentation.open(
-                    {
-                        ...item,
-
-                        src: `../assets/pirate/videos/${item.file}`,
-
-                        totalVideos: waveSystem.videos.length,
-
-                        contextLabel:
-                            `${waveSystem.title.toUpperCase()} / PRESENTATION`,
-
-                        eyebrow: "DETALHES DO SISTEMA",
-
-                        footer: "MIGUEL CORAL · UNREAL ENGINE 5",
-
-                        summary: waveSystem.presentationSummary,
-
-                        extraDescription: waveSystem.presentationExtra
-                    },
-                    video
-                );
-            });
 
             // RODAPÉ DO CARD
 
