@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101110">
+  <meta name="description" content="Lotus App — sistema de gestão comercial desenvolvido por Miguel Coral.">
+  <title>Lotus App — Miguel Coral</title>
+
+  <link rel="stylesheet" href="lotus-app.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html#home">
+        <span class="brand-mark">MC.</span>
+        <span>MIGUEL CORAL<span class="brand-role">Game Developer</span></span>
+      </a>
+      <nav class="nav">
+        <a href="../index.html#home">Início</a>
+        <a href="../index.html#projects">Projetos</a>
+        <a href="#requirements">Requisitos</a>
+        <a class="contact" href="../index.html#contact">Contato ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="kicker mono">PROJETO COMPLEMENTAR / SOFTWARE</p>
+          <h1 class="title">Lotus <span>App.</span></h1>
+          <p class="lead">
+            Sistema desktop de gestão comercial desenvolvido para centralizar
+            as operações de uma loja de cosméticos e produtos de beleza. Um
+            projeto focado em regras de negócio, persistência local de dados
+            e integração entre módulos operacionais e gerenciais.
+          </p>
+          <div class="tags">
+            <span class="tag">ELECTRON</span>
+            <span class="tag">NODE.JS</span>
+            <span class="tag">CHROMIUM</span>
+            <span class="tag">SQLITE</span>
+          </div>
+          <div class="actions">
+            <a class="btn" href="#requirements">Consultar requisitos <span>↘</span></a>
+            <a class="back" href="../index.html#projects">← Voltar aos projetos</a>
+          </div>
+        </div>
+        <div class="visual">
+          <div class="visual-top mono"><span>LOTUS APP</span><span>DESKTOP / LOCAL</span></div>
+          <div class="logo">LOTUS</div>
+          <div class="visual-bottom mono"><span>GESTÃO COMERCIAL</span><span>PROJECT / 002</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container overview">
+        <div class="copy">
+          <p class="kicker mono">01 / VISÃO GERAL</p>
+          <h2 class="section-title">Operações reunidas em um só lugar.</h2>
+          <p style="margin-top:18px">
+            O <strong>Lotus App</strong> reúne gerenciamento de produtos e
+            estoque, registro de vendas, controle financeiro, acompanhamento
+            de clientes e dívidas, gerenciamento de testers e geração de
+            relatórios gerenciais.
+          </p>
+          <p>
+            A aplicação foi projetada para funcionar localmente, sem depender
+            de uma conexão constante com a internet. A arquitetura separa a
+            interface, os serviços de backend e a persistência de dados,
+            favorecendo a organização do código e a manutenção do sistema.
+          </p>
+        </div>
+        <div class="facts">
+          <div class="fact"><strong>Gestão de produtos</strong><span>Cadastro, preços, custos, lotes, validade, estoque mínimo e perdas.</span></div>
+          <div class="fact"><strong>Vendas e pagamentos</strong><span>Carrinho, descontos, pagamentos mistos, troco e FIADO.</span></div>
+          <div class="fact"><strong>Controle financeiro</strong><span>Abertura e fechamento de caixa, movimentações e recebimentos.</span></div>
+          <div class="fact"><strong>Relatórios</strong><span>Indicadores de vendas, recebíveis, estoque e análise de lucro.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <p class="kicker mono">02 / STACK TÉCNICA</p>
+        <h2 class="section-title">Tecnologias e responsabilidades.</h2>
+        <div class="tech-grid">
+          <article class="tech-card"><small>01 / DESKTOP</small>
+            <h3>Electron</h3>
+            <p>Estrutura a aplicação desktop e integra a experiência de software local.</p>
+          </article>
+          <article class="tech-card"><small>02 / BACKEND</small>
+            <h3>Node.js</h3>
+            <p>Executa as operações e regras de negócio do sistema.</p>
+          </article>
+          <article class="tech-card"><small>03 / INTERFACE</small>
+            <h3>Chromium</h3>
+            <p>Realiza a renderização da interface da aplicação.</p>
+          </article>
+          <article class="tech-card"><small>04 / DADOS</small>
+            <h3>SQLite</h3>
+            <p>Armazena localmente os dados usados pelos módulos do aplicativo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="kicker mono">03 / DEMONSTRAÇÃO</p>
+        <h2 class="section-title">Interface e demonstração.</h2>
+        <p class="section-intro">
+          Substitua os espaços abaixo por capturas reais do aplicativo e por
+          um vídeo curto mostrando os principais fluxos.
+        </p>
+        <div class="media-grid">
+          <div class="media-placeholder">
+            <span class="media-icon">▧</span>
+            <div>
+              <h3>Painel principal</h3>
+              <p>Use uma imagem como <code>assets/lotus-dashboard.png</code>.</p>
+            </div>
+            <span class="mono">IMAGEM 01 / PAINEL</span>
+          </div>
+          <div class="media-placeholder">
+            <span class="media-icon">▧</span>
+            <div>
+              <h3>Vendas e caixa</h3>
+              <p>Use uma imagem como <code>assets/lotus-vendas.png</code>.</p>
+            </div>
+            <span class="mono">IMAGEM 02 / OPERAÇÃO</span>
+          </div>
+          <div class="media-placeholder">
+            <span class="media-icon">▶</span>
+            <div>
+              <h3>Vídeo demonstrativo</h3>
+              <p>Adicione <code>assets/lotus-demo.mp4</code> e troque este bloco por um elemento
+                <code>&lt;video controls&gt;</code>.
+              </p>
+            </div>
+            <span class="mono">VÍDEO / DEMONSTRAÇÃO</span>
+          </div>
+          <div class="media-placeholder">
+            <span class="media-icon">▦</span>
+            <div>
+              <h3>Relatórios gerenciais</h3>
+              <p>Mostre relatórios, gráficos, recebíveis ou indicadores de lucro.</p>
+            </div>
+            <span class="mono">IMAGEM 03 / RELATÓRIOS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="requirements">
+      <div class="container">
+        <p class="kicker mono">04 / DOCUMENTAÇÃO FUNCIONAL</p>
+        <h2 class="section-title">Requisitos funcionais.</h2>
+        <p class="section-intro">
+          Os requisitos estão separados por área funcional. Abra cada capítulo
+          para consultar os detalhes.
+        </p>
+        <div class="toolbar">
+          <p><strong>145 requisitos funcionais</strong> · 13 capítulos</p>
+          <div>
+            <button type="button" id="open-all">EXPANDIR TODOS</button>
+            <button type="button" id="close-all">RECOLHER TODOS</button>
+          </div>
+        </div>
+        <div id="requirements-list"></div>
+        <p class="footnote">
+          A lista foi consolidada a partir da documentação fornecida. Não foram
+          executados testes automatizados; sua presença nesta página não certifica
+          que todos os fluxos foram testados em todas as condições.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="kicker mono">05 / ESCOPO E LIMITAÇÕES</p>
+        <h2 class="section-title">Transparência sobre o projeto.</h2>
+        <div class="notes">
+          <article class="note">
+            <h3>Lucro histórico</h3>
+            <p>O relatório pode usar o custo atual do produto para recalcular uma venda antiga quando não existe custo histórico aplicável. A correção necessária é preservar e utilizar o custo registrado no momento da venda.</p>
+          </article>
+          <article class="note">
+            <h3>Restauração de backup</h3>
+            <p>A criação de backup está disponível, mas a restauração é manual, substituindo o banco atual pelo arquivo de backup. Alterações posteriores à cópia não estarão incluídas. Recomenda-se guardar uma cópia do banco atual antes da substituição.</p>
+          </article>
+          <article class="note">
+            <h3>Limite do cancelamento</h3>
+            <p>O cancelamento reverte a operação dentro do Lotus App, incluindo os ajustes internos pertinentes. Não estorna automaticamente transações externas de PIX, cartão ou banco; devoluções externas precisam ser tratadas separadamente.</p>
+          </article>
+          <article class="note">
+            <h3>Validação do escopo</h3>
+            <p>A lista foi consolidada a partir da documentação e da análise descrita. Não houve execução automatizada de testes; este documento não certifica todos os fluxos possíveis.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© 2026 Miguel Coral · Portfólio de desenvolvimento</span>
+      <a href="#">Voltar ao topo ↑</a>
+    </div>
+  </footer>
+
+  <script src="lotus-app.js" defer></script>
+</body>
+
+</html>

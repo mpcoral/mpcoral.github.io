@@ -19,7 +19,14 @@ a { color: inherit; text-decoration: none; }
 .mono { font: 11px var(--mono); letter-spacing: 1.2px; text-transform: uppercase; }
 
 .header { min-height: 82px; border-bottom: 1px solid var(--border); display: flex; align-items: center; }
-.header-inner { display: flex; justify-content: space-between; align-items: center; gap: 25px; width: 100%; }
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+}
+
 .brand { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 700; }
 .brand-mark { width: 37px; height: 37px; border: 1px solid var(--accent); display: grid; place-items: center; color: var(--accent); }
 .brand-role { display: block; color: var(--muted); font: 9px var(--mono); letter-spacing: 1px; margin-top: 4px; }
