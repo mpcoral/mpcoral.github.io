@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Quadrado escuro com borda verde, igual ao "MC." do cabeçalho -->
+  <rect x="2" y="2" width="60" height="60" fill="#101110" stroke="#c6f36a" stroke-width="4"/>
+  <text x="32" y="42" text-anchor="middle" fill="#c6f36a"
+        font-family="'Space Grotesk', 'Segoe UI', Arial, sans-serif"
+        font-size="27" font-weight="700" letter-spacing="-1.5">MC.</text>
+</svg>

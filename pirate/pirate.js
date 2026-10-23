@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         videos: [
             {
-                file: "GmCore2x.mp4",
+                file: "gm-core-2x.mp4",
                 number: "01",
                 title: "GM Core",
                 description:
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 label: "GAME MODE · WAVE LOGIC"
             },
             {
-                file: "EnemySpawn2x.mp4",
+                file: "enemy-spawn-2x.mp4",
                 number: "02",
                 title: "Enemy Spawn",
                 description:
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 label: "BLUEPRINTS · ENEMY SPAWN"
             },
             {
-                file: "Spawnando2x.mp4",
+                file: "spawning-2x.mp4",
                 number: "03",
                 title: "Sistema em execução",
                 description:

@@ -1,16 +1,57 @@
+/* ==========================================
+   GLOBAL
+   Estilos compartilhados por todas as páginas:
+   cores, fontes, cabeçalho, rodapé, botões,
+   títulos de seção e tags.
+
+   O que é específico de uma página fica no CSS
+   com o mesmo nome dela (index.css, pirate.css...).
+   ========================================== */
+
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
+/* ==========================================
+   CORES E FONTES
+   ========================================== */
+
 :root {
+    /* Fundos, do mais escuro ao mais claro */
+    --bg-deep: #080908;
     --bg: #101110;
+    --surface-alt: #141613;
     --surface: #181a17;
     --surface-light: #20231d;
+
+    /* Textos */
     --text: #f1f0e9;
+    --text-soft: #d1d3ca;
     --muted: #a0a397;
+
+    /* Destaque */
     --accent: #c6f36a;
+    --accent-hover: #d6ff87;
+
+    /*
+     * Versões transparentes do destaque, calculadas a partir
+     * de --accent. Mudando --accent, todas acompanham.
+     */
+    --accent-faint: color-mix(in srgb, var(--accent) 3%, transparent);   /* linhas de grade */
+    --accent-glow: color-mix(in srgb, var(--accent) 8%, transparent);    /* brilhos e sombras suaves */
+    --accent-muted: color-mix(in srgb, var(--accent) 35%, transparent);  /* bordas tracejadas e preenchimentos */
+    --accent-strong: color-mix(in srgb, var(--accent) 55%, transparent); /* bordas no hover e brilho do ponto */
+
+    /* Bordas */
     --border: rgba(241, 240, 233, 0.13);
+    --border-soft: rgba(241, 240, 233, 0.07);
+
+    /* Fontes */
     --mono: "DM Mono", monospace;
     --sans: "Space Grotesk", sans-serif;
 }
+
+/* ==========================================
+   BASE
+   ========================================== */
 
 * {
     margin: 0;
@@ -61,12 +102,17 @@ a {
     margin: 0 auto;
 }
 
+/* Texto pequeno em fonte monoespaçada */
 .mono {
     font-family: var(--mono);
     font-size: 10px;
     letter-spacing: 1.2px;
     text-transform: uppercase;
 }
+
+/* ==========================================
+   CABEÇALHO
+   ========================================== */
 
 .site-header {
     position: relative;
@@ -139,19 +185,11 @@ a {
     color: var(--accent);
 }
 
-.nav a:focus-visible,
-.project-link:focus-visible,
-.button-primary:focus-visible,
-.text-link:focus-visible,
-.footer-top:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 5px;
-}
+/* ==========================================
+   BOTÕES E LINKS DE AÇÃO
+   ========================================== */
 
-.footer-name span {
-    color: var(--accent);
-}
-
+/* Botão principal verde */
 .button-primary {
     display: inline-flex;
     align-items: center;
@@ -166,7 +204,54 @@ a {
 
 .button-primary:hover {
     transform: translateY(-3px);
-    background: #d6ff87;
+    background: var(--accent-hover);
+}
+
+/* Link de texto discreto, ao lado de um botão */
+.text-link {
+    color: var(--muted);
+    font-size: 13px;
+    transition: color 0.2s;
+}
+
+.text-link:hover {
+    color: var(--text);
+}
+
+/* Link de voltar no topo das páginas internas */
+.back-link {
+    display: inline-flex;
+    margin: 30px 0 22px;
+    color: var(--muted);
+    font-size: 10px;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: var(--accent);
+}
+
+/* Foco pelo teclado */
+.nav a:focus-visible,
+.button-primary:focus-visible,
+.text-link:focus-visible,
+.back-link:focus-visible,
+.footer-top:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 5px;
+}
+
+/* ==========================================
+   SEÇÕES
+   ========================================== */
+
+.section {
+    padding: 100px 0;
+}
+
+/* Seção com fundo alternado */
+.section-alt {
+    background: var(--surface-alt);
 }
 
 .section-heading {
@@ -182,7 +267,8 @@ a {
     margin-bottom: 13px;
 }
 
-.section-heading h2 {
+.section-heading h2,
+.section-title {
     font-size: clamp(34px, 4vw, 48px);
     line-height: 1.1;
     letter-spacing: -2px;
@@ -195,7 +281,9 @@ a {
     line-height: 1.9;
 }
 
-/* TAGS E LINKS */
+/* ==========================================
+   TAGS
+   ========================================== */
 
 .tags {
     display: flex;
@@ -207,13 +295,42 @@ a {
 .tag {
     padding: 7px 10px;
     border: 1px solid var(--border);
-    color: #d1d3ca;
+    color: var(--text-soft);
     font-family: var(--mono);
     font-size: 10px;
     letter-spacing: 0.2px;
 }
 
-/* RODAPÉ */
+/* ==========================================
+   ENCERRAMENTO DAS PÁGINAS DE PROJETO
+   "Fim do projeto / Vamos explorar outros projetos?"
+   ========================================== */
+
+.page-end {
+    padding: 80px 0 105px;
+    text-align: center;
+}
+
+.page-end > p {
+    color: var(--accent);
+}
+
+.page-end h2 {
+    margin: 18px 0 28px;
+    font-size: clamp(36px, 6vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -2.5px;
+}
+
+@media (max-width: 600px) {
+    .page-end {
+        padding-top: 60px;
+    }
+}
+
+/* ==========================================
+   RODAPÉ
+   ========================================== */
 
 .site-footer {
     border-top: 1px solid var(--border);
@@ -234,6 +351,10 @@ a {
     letter-spacing: 1px;
 }
 
+.footer-name span {
+    color: var(--accent);
+}
+
 .footer-copy {
     color: var(--muted);
     font-size: 11px;
@@ -249,7 +370,9 @@ a {
     opacity: 0.75;
 }
 
-/* RESPONSIVIDADE */
+/* ==========================================
+   RESPONSIVIDADE
+   ========================================== */
 
 @media (max-width: 900px) {
     .header-inner {
@@ -282,8 +405,8 @@ a {
         flex-wrap: wrap;
     }
 
-    .nav a {
-        font-size: 12px;
+    .section {
+        padding: 72px 0;
     }
 
     .section-heading {
@@ -293,7 +416,8 @@ a {
         margin-bottom: 28px;
     }
 
-    .section-heading h2 {
+    .section-heading h2,
+    .section-title {
         font-size: 36px;
     }
 

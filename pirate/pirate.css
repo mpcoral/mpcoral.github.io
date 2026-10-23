@@ -1,22 +1,8 @@
 /* ==========================================
-   PÁGINA DE DETALHES
+   PÁGINA DO PROJETO PIRATE (pirate.html)
+   Os estilos compartilhados ficam em css/global.css
+   e a apresentação de vídeo em css/video-presentation.css.
    ========================================== */
-
-.detail-page {
-    padding-bottom: 80px;
-}
-
-.back-link {
-    display: inline-flex;
-    margin: 30px 0 22px;
-    color: var(--muted);
-    font-size: 10px;
-    transition: color 0.2s;
-}
-
-.back-link:hover {
-    color: var(--accent);
-}
 
 /* ==========================================
    APRESENTAÇÃO DO PROJETO
@@ -145,13 +131,12 @@
 
 /* ==========================================
    VÍDEO DE GAMEPLAY
-   CORRIGIDO PARA REPRODUZIR O LAYOUT ORIGINAL
    ========================================== */
 
 .video-frame {
     width: 100%;
     border: 1px solid var(--border);
-    background: #080908;
+    background: var(--bg-deep);
     overflow: hidden;
 }
 
@@ -161,7 +146,7 @@
     max-height: 720px;
     aspect-ratio: 16 / 9;
     object-fit: contain;
-    background: #080908;
+    background: var(--bg-deep);
 }
 
 /* Legenda abaixo do player */
@@ -202,30 +187,6 @@
 
 .detail-tech-content .tags {
     margin-top: 22px;
-}
-
-/* ==========================================
-   ENCERRAMENTO
-   ========================================== */
-
-.detail-end {
-    padding: 80px 0 25px;
-    text-align: center;
-}
-
-.detail-end > p {
-    color: var(--accent);
-}
-
-.detail-end h2 {
-    margin: 18px 0 28px;
-    font-size: clamp(36px, 6vw, 60px);
-    line-height: 1.05;
-    letter-spacing: -2.5px;
-}
-
-.detail-end .button-primary {
-    display: inline-flex;
 }
 
 /* ==========================================
@@ -294,10 +255,6 @@
         padding: 55px 0;
     }
 
-    .detail-end {
-        padding-top: 60px;
-    }
-
     /* PLAYER E LEGENDA EM TELAS PEQUENAS */
 
     .video-caption {
@@ -334,7 +291,7 @@
 
 .element-card:hover {
     transform: translateY(-3px);
-    border-color: rgba(198, 243, 106, 0.55);
+    border-color: var(--accent-strong);
 }
 
 .element-card.is-active {
@@ -434,7 +391,7 @@
     margin-top: 24px;
     padding: 30px;
     border: 1px solid var(--border);
-    background: #141613;
+    background: var(--surface-alt);
     animation: elementReveal 0.25s ease;
 }
 
@@ -473,18 +430,18 @@
     min-height: 100px;
     margin-top: 24px;
     place-items: center;
-    border: 1px dashed rgba(198, 243, 106, 0.3);
+    border: 1px dashed var(--accent-muted);
     background:
         linear-gradient(
-            rgba(198, 243, 106, 0.025) 1px,
+            var(--accent-faint) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(198, 243, 106, 0.025) 1px,
+            var(--accent-faint) 1px,
             transparent 1px
         ),
-        #101110;
+        var(--bg);
     background-size: 22px 22px;
 }
 
@@ -570,7 +527,7 @@
 }
 
 .wave-video-card:hover {
-    border-color: rgba(182, 255, 107, 0.5);
+    border-color: var(--accent-strong);
     transform: translateY(-3px);
 }
 
@@ -594,7 +551,7 @@
     height: 34px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    color: #b6ff6b;
+    color: var(--accent);
     font-size: 12px;
 }
 
@@ -615,9 +572,8 @@
     display: block;
     width: 100%;
     aspect-ratio: 16 / 9;
-    background: #080908;
+    background: var(--bg-deep);
     object-fit: contain;
-    cursor: pointer;
 }
 
 .wave-video-footer {
