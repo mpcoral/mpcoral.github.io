@@ -1,8 +1,35 @@
 /* ==========================================
+   VIDEO PRESENTATION
+   Instruções de uso no topo de js/video-presentation.js
+   ========================================== */
+
+/* ==========================================
+   ELEMENTOS QUE ABREM A APRESENTAÇÃO
+   ========================================== */
+
+[data-presentation] {
+    cursor: pointer;
+}
+
+[data-presentation]:focus-visible {
+    outline: 2px solid var(--accent, #c6f36a);
+    outline-offset: 3px;
+}
+
+/* ==========================================
    FUNDO ESCURECIDO
    ========================================== */
 
 .video-presentation-overlay {
+    /*
+     * Usa as cores e fontes do site quando existirem.
+     * Para personalizar só a apresentação, redefina as
+     * variáveis --vp-* neste seletor.
+     */
+    --vp-accent: var(--accent, #c6f36a);
+    --vp-mono: var(--mono, "DM Mono", ui-monospace, monospace);
+    --vp-sans: var(--sans, "Space Grotesk", system-ui, sans-serif);
+
     position: fixed;
     inset: 0;
     z-index: 99999;
@@ -16,12 +43,35 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    font-family: var(--vp-sans);
+    line-height: 1.6;
+    text-align: left;
 
     transition:
         opacity 1.8s ease,
         background 2s ease,
         backdrop-filter 2s ease,
         visibility 0s linear 2.1s;
+}
+
+.video-presentation-overlay *,
+.video-presentation-overlay *::before,
+.video-presentation-overlay *::after {
+    box-sizing: border-box;
+}
+
+/* Partes sem texto ficam ocultas. */
+.video-presentation-overlay [hidden] {
+    display: none !important;
+}
+
+/* Textos pequenos em fonte monoespaçada. */
+.video-presentation-topline,
+.video-presentation-video-name,
+.video-presentation-eyebrow,
+.video-presentation-bottom {
+    font-family: var(--vp-mono);
+    text-transform: uppercase;
 }
 
 .video-presentation-overlay.is-open {
@@ -66,7 +116,8 @@
     transition:
         transform 2s cubic-bezier(0.16, 1, 0.3, 1),
         opacity 1.6s ease,
-        box-shadow 1.6s ease;
+        box-shadow 1.6s ease,
+        border-color 0.5s ease;
 }
 
 .video-presentation-overlay.is-open .video-presentation-window {
@@ -85,6 +136,12 @@
  */
 
 .video-presentation-video-area {
+    /*
+     * Fica acima do painel de texto, que se esconde atrás
+     * do player durante a abertura e o fechamento.
+     */
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -94,7 +151,7 @@
     background:
         radial-gradient(
             ellipse at center,
-            rgba(182, 255, 107, 0.065),
+            color-mix(in srgb, var(--vp-accent) 6.5%, transparent),
             transparent 70%
         ),
         #080908;
@@ -122,8 +179,8 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #b6ff6b;
-    box-shadow: 0 0 12px rgba(182, 255, 107, 0.7);
+    background: var(--vp-accent);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--vp-accent) 70%, transparent);
 }
 
 .video-presentation-video {
@@ -155,6 +212,7 @@
 
 .video-presentation-info {
     position: relative;
+    z-index: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -188,7 +246,7 @@
 
 .video-presentation-close:hover {
     background: rgba(255, 255, 255, 0.12);
-    border-color: #b6ff6b;
+    border-color: var(--vp-accent);
     transform: rotate(90deg);
 }
 
@@ -198,7 +256,7 @@
 
 .video-presentation-eyebrow {
     margin: 0 0 22px;
-    color: #b6ff6b;
+    color: var(--vp-accent);
     font-size: 10px;
     letter-spacing: 2px;
 }
@@ -215,7 +273,7 @@
     width: 42px;
     height: 2px;
     margin-bottom: 24px;
-    background: #b6ff6b;
+    background: var(--vp-accent);
 }
 
 .video-presentation-summary {
@@ -263,9 +321,9 @@
     margin-top: 24px;
     padding: 0 0 6px;
     border: 0;
-    border-bottom: 1px solid rgba(182, 255, 107, 0.55);
+    border-bottom: 1px solid color-mix(in srgb, var(--vp-accent) 55%, transparent);
     background: transparent;
-    color: #b6ff6b;
+    color: var(--vp-accent);
     font: inherit;
     font-size: 12px;
     cursor: pointer;
@@ -274,7 +332,7 @@
 
 .video-presentation-toggle:hover {
     gap: 16px;
-    color: #d5ffab;
+    color: color-mix(in srgb, var(--vp-accent) 60%, #fff);
 }
 
 .video-presentation-toggle-arrow {
