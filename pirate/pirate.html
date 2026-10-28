@@ -180,125 +180,113 @@
 
                 <div class="elements-grid">
 
-                    <!-- PERSONAGEM -->
+                    <!-- WAVE SYSTEM (vídeos configurados em pirate.js, chave "wave-system") -->
 
-                    <button class="element-card is-active" type="button" data-title="Personagem"
-                        data-description="Personagem controlado pelo jogador durante a experiência. Futuramente, este espaço poderá mostrar um GIF do personagem em ação.">
+                    <button class="element-card is-active" type="button" data-system="wave-system"
+                        data-title="Wave System"
+                        data-description="Um sistema responsável por organizar as ondas de inimigos, controlar os spawns e distribuir os adversários durante a partida. Confira a lógica dos Blueprints e a execução do sistema no jogo.">
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/character.png" alt="Personagem do jogo" loading="lazy">
+                            <img src="../assets/pirate/images/wave-system.png" alt="Ondas de inimigos no Wave System" loading="lazy">
 
                             <span class="element-number mono">01</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Personagem</span>
+                        <span class="element-card-title">Wave System</span>
                         <span class="element-card-hint mono">VER DETALHES +</span>
 
                     </button>
 
-                    <!-- INIMIGOS -->
+                    <!-- IA E DEFESA DO NAVIO (vídeos configurados em pirate.js, chave "enemy-ai") -->
 
-                    <button class="element-card" type="button" data-title="Inimigos"
-                        data-description="Sistema de inimigos com comportamentos de combate e interação com os elementos do jogo. Um futuro GIF poderá demonstrar os inimigos durante a partida.">
+                    <button class="element-card" type="button" data-system="enemy-ai"
+                        data-title="IA e defesa do navio"
+                        data-description="Os inimigos escolhem um alvo, cercam o navio em posições de ataque e causam dano tanto ao navio quanto ao jogador. Se o navio for destruído, a partida é perdida. Confira a lógica da IA e o sistema em ação.">
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/enemy.png" alt="Inimigo do jogo" loading="lazy">
+                            <img src="../assets/pirate/images/enemy-ai.png" alt="Inimigos cercando o navio" loading="lazy">
 
                             <span class="element-number mono">02</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Inimigos</span>
+                        <span class="element-card-title">IA e defesa do navio</span>
                         <span class="element-card-hint mono">VER DETALHES +</span>
 
                     </button>
 
-                    <!-- CENÁRIO -->
+                    <!-- LOJA (vídeo configurado em pirate.js, chave "store") -->
 
-                    <button class="element-card" type="button" data-title="Cenário"
-                        data-description="Os ambientes ajudam a construir a atmosfera e a identidade visual do jogo. Esta imagem é provisória e poderá ser substituída por uma captura do cenário.">
+                    <button class="element-card" type="button" data-system="store"
+                        data-title="Loja"
+                        data-description="Uma loja aberta durante a partida que troca as moedas coletadas por vida, munição e barris explosivos. Os preços e as quantidades vêm de uma Data Table, e a compra só acontece quando o jogador tem moedas suficientes.">
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/fire.png" alt="Elemento visual provisório do jogo"
+                            <img src="../assets/pirate/images/store.png" alt="Loja do jogo"
                                 loading="lazy">
 
                             <span class="element-number mono">03</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Cenário</span>
+                        <span class="element-card-title">Loja</span>
                         <span class="element-card-hint mono">VER DETALHES +</span>
 
                     </button>
 
-                    <!-- OBJETOS -->
+                    <!-- SISTEMA DE INTERAÇÃO (vídeos configurados em pirate.js, chave "interaction") -->
 
-                    <button class="element-card" type="button" data-title="Objetos"
-                        data-description="Objetos que fazem parte do ambiente do jogo e podem ser utilizados para demonstrar as interações implementadas. A imagem atual é provisória.">
+                    <button class="element-card" type="button" data-system="interaction"
+                        data-title="Sistema de interação"
+                        data-description="Um sistema reutilizável que detecta os objetos na mira do jogador e permite interagir com eles, com um toque ou segurando o botão. Ele vai do consumo de itens até carregar o baú de ouro e entregá-lo ao navio, o que inicia a partida.">
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/bottle.png" alt="Objeto presente no jogo" loading="lazy">
+                            <img src="../assets/pirate/images/bottle.png" alt="Garrafa interagível do jogo" loading="lazy">
 
                             <span class="element-number mono">04</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Objetos</span>
+                        <span class="element-card-title">Sistema de interação</span>
                         <span class="element-card-hint mono">VER DETALHES +</span>
 
                     </button>
 
-                    <!-- MENU DO JOGO -->
+                    <!-- BARRIL EXPLOSIVO (vídeos configurados em pirate.js, chave "explosive-barrel") -->
 
-                    <button class="element-card" type="button" data-title="Menu do jogo"
-                        data-description="O menu apresenta uma cena animada do próprio jogo ao fundo enquanto o jogador navega pelas opções. Futuramente, este espaço poderá exibir um GIF dessa apresentação.">
+                    <button class="element-card" type="button" data-system="explosive-barrel"
+                        data-title="Barril explosivo"
+                        data-description="Os barris comprados na loja podem ser posicionados no mapa mirando onde colocá-los. Ao receberem dano, explodem, causando dano em área e lançando os inimigos com força física. Confira a lógica do posicionamento e da explosão.">
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/ship.png" alt="Imagem provisória para o menu do jogo"
+                            <img src="../assets/pirate/images/explosive-barrel.png" alt="Barril explosivo"
                                 loading="lazy">
 
                             <span class="element-number mono">05</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Menu do jogo</span>
+                        <span class="element-card-title">Barril explosivo</span>
                         <span class="element-card-hint mono">VER DETALHES +</span>
 
                     </button>
 
-                    <!-- LOJA E BARRIL EXPLOSIVO -->
+                    <!-- MENU E TELAS DO JOGO (vídeo configurado em pirate.js, chave "menus") -->
 
-                    <button class="element-card" type="button" data-title="Loja e barril explosivo"
-                        data-description="A loja permite utilizar as moedas do jogo para adquirir itens. Entre eles está o barril explosivo. Futuramente, um GIF poderá demonstrar o barril em movimento e sua utilização.">
+                    <button class="element-card" type="button" data-system="menus"
+                        data-title="Menu e telas do jogo"
+                        data-description="O jogo começa em um menu com uma cena animada própria e passa por loading, pausa, configurações gráficas e as telas de vitória e derrota, todas conectadas entre si.">
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/bottle.png" alt="Imagem provisória para a loja do jogo"
+                            <img src="../assets/pirate/images/menu.png" alt="Menu principal do jogo"
                                 loading="lazy">
 
                             <span class="element-number mono">06</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Loja e barril explosivo</span>
-                        <span class="element-card-hint mono">VER DETALHES +</span>
-
-                    </button>
-
-                    <!-- SISTEMA DE BUOYANCY -->
-
-                    <button class="element-card" type="button" data-title="Sistema de buoyancy"
-                        data-description="O sistema de buoyancy permite que o navio flutue sobre a água. A demonstração planejada mostrará um barril sendo empurrado para a água, destacando a interação física com o ambiente.">
-
-                        <span class="element-image">
-                            <img src="../assets/pirate/images/ship.png" alt="Imagem provisória para o sistema de buoyancy"
-                                loading="lazy">
-
-                            <span class="element-number mono">07</span>
-                            <span class="element-play" aria-hidden="true">↗</span>
-                        </span>
-
-                        <span class="element-card-title">Sistema de buoyancy</span>
+                        <span class="element-card-title">Menu e telas do jogo</span>
                         <span class="element-card-hint mono">VER DETALHES +</span>
 
                     </button>
@@ -316,17 +304,18 @@
                         </span>
 
                         <span class="element-detail-index mono" id="element-detail-index">
-                            01 / 07
+                            01 / 06
                         </span>
 
                     </div>
 
-                    <h3 id="element-detail-title">Personagem</h3>
+                    <h3 id="element-detail-title">Wave System</h3>
 
                     <p id="element-detail-description">
-                        Personagem controlado pelo jogador durante a experiência.
-                        Futuramente, este espaço poderá mostrar um GIF do
-                        personagem em ação.
+                        Um sistema responsável por organizar as ondas de inimigos,
+                        controlar os spawns e distribuir os adversários durante a
+                        partida. Confira a lógica dos Blueprints e a execução do
+                        sistema no jogo.
                     </p>
 
                     <div class="element-detail-media" id="element-detail-media">

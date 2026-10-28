@@ -506,10 +506,10 @@
 }
 
 /* ==========================================
-   WAVE SYSTEM — CARDS DOS VÍDEOS
+   SISTEMAS — CARDS DOS VÍDEOS
    ========================================== */
 
-.wave-system-media {
+.system-videos {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
@@ -517,7 +517,7 @@
     padding: 8px 0;
 }
 
-.wave-video-card {
+.system-video-card {
     min-width: 0;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -526,23 +526,23 @@
     transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
-.wave-video-card:hover {
+.system-video-card:hover {
     border-color: var(--accent-strong);
     transform: translateY(-3px);
 }
 
-.wave-video-card:last-child:nth-child(odd) {
+.system-video-card:last-child:nth-child(odd) {
     grid-column: 1 / -1;
 }
 
-.wave-video-heading {
+.system-video-heading {
     display: flex;
     align-items: flex-start;
     gap: 12px;
     padding: 18px 18px 14px;
 }
 
-.wave-video-number {
+.system-video-number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -555,20 +555,20 @@
     font-size: 12px;
 }
 
-.wave-video-title {
+.system-video-title {
     margin: 0 0 5px;
     font-size: 16px;
     line-height: 1.4;
 }
 
-.wave-video-description {
+.system-video-description {
     margin: 0;
     color: rgba(255, 255, 255, 0.65);
     font-size: 13px;
     line-height: 1.6;
 }
 
-.wave-video-player {
+.system-video-player {
     display: block;
     width: 100%;
     aspect-ratio: 16 / 9;
@@ -576,7 +576,7 @@
     object-fit: contain;
 }
 
-.wave-video-footer {
+.system-video-footer {
     padding: 12px 18px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     color: rgba(255, 255, 255, 0.45);
@@ -585,15 +585,15 @@
 }
 
 /* ==========================================
-   RESPONSIVIDADE DO WAVE SYSTEM
+   RESPONSIVIDADE DOS CARDS DE VÍDEO
    ========================================== */
 
 @media (max-width: 600px) {
-    .wave-system-media {
+    .system-videos {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .wave-video-card:last-child:nth-child(odd) {
+    .system-video-card:last-child:nth-child(odd) {
         grid-column: auto;
     }
 }
