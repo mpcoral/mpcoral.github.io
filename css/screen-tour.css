@@ -1,0 +1,1003 @@
+/* ==========================================
+   SCREEN TOUR
+   Cards das telas, janela com o print e o bonequinho
+   palito que atravessa os cards em zigue-zague.
+   A lógica e as instruções de uso ficam em js/screen-tour.js.
+   ========================================== */
+
+.tour {
+    /*
+     * Usa as cores e fontes do site quando existirem.
+     * Para personalizar só o tour, redefina as variáveis --st-*
+     * neste seletor.
+     */
+    --st-accent: var(--accent, #c6f36a);
+    --st-accent-muted: color-mix(in srgb, var(--st-accent) 35%, transparent);
+    --st-accent-strong: color-mix(in srgb, var(--st-accent) 55%, transparent);
+    --st-accent-glow: color-mix(in srgb, var(--st-accent) 8%, transparent);
+    --st-border: var(--border, rgba(241, 240, 233, 0.13));
+    --st-surface: var(--surface, #181a17);
+    --st-text: var(--text, #f1f0e9);
+    --st-text-soft: var(--text-soft, #d1d3ca);
+    --st-muted: var(--muted, #a0a397);
+    --st-bg-deep: var(--bg-deep, #080908);
+    --st-mono: var(--mono, "DM Mono", ui-monospace, monospace);
+
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(230px, 0.36fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+}
+
+/* ==========================================
+   CARDS
+   O espaço acima de cada card é o "chão" do bonequinho.
+   ========================================== */
+
+.tour-list {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding-top: 48px;
+    list-style: none;
+}
+
+.tour-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--st-border);
+    background: var(--st-surface);
+    color: var(--st-text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.4s ease;
+}
+
+.tour-card:hover {
+    border-color: var(--st-accent-strong);
+}
+
+.tour-card:focus-visible {
+    outline: 2px solid var(--st-accent);
+    outline-offset: 3px;
+}
+
+/* Card atual e cards já percorridos ganham a borda verde */
+.tour-card.is-active,
+.tour-card.is-done {
+    border-color: var(--st-accent);
+}
+
+.tour-card strong,
+.tour-card small {
+    position: relative;
+    z-index: 1;
+}
+
+.tour-card strong {
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.4s ease;
+}
+
+.tour-card.is-active strong,
+.tour-card.is-done strong {
+    color: var(--st-accent);
+}
+
+.tour-card small {
+    color: var(--st-muted);
+    font-size: 11px;
+}
+
+/* Trechos do card: um por print, separados por uma linha de vidro */
+.tour-card-parts {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    pointer-events: none;
+}
+
+.tour-card.is-reverse .tour-card-parts {
+    flex-direction: row-reverse;
+}
+
+.tour-card-parts i {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+.tour-card-parts i + i {
+    border-left: 1px dashed var(--st-accent-muted);
+}
+
+.tour-card.is-reverse .tour-card-parts i + i {
+    border-right: 1px dashed var(--st-accent-muted);
+    border-left: 0;
+}
+
+/* O verde varre o trecho no sentido em que o bonequinho anda */
+.tour-card-parts i::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--st-accent) 11%, transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.tour-card.is-reverse .tour-card-parts i::before {
+    transform-origin: right;
+}
+
+.tour-card-parts i.is-lit::before {
+    transform: scaleX(1);
+}
+
+/* ==========================================
+   JANELA COM O PRINT
+   ========================================== */
+
+.tour-device {
+    padding: 0 8px 8px;
+    border: 1px solid var(--st-border);
+    border-radius: 12px;
+    background: #0b0c0b;
+    box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.55),
+        0 0 70px var(--st-accent-glow);
+}
+
+/* Textos da barra em fonte monoespaçada */
+.tour-bar {
+    font-family: var(--st-mono);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 4px;
+    color: var(--st-muted);
+    font-size: 9px;
+}
+
+.tour-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.tour-dots i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--st-border);
+}
+
+.tour-dots i:first-child {
+    background: var(--st-accent);
+}
+
+.tour-counter {
+    margin-left: auto;
+    color: var(--st-accent);
+}
+
+.tour-window {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1920 / 1008;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 6px;
+    background: var(--st-bg-deep);
+    cursor: zoom-in;
+}
+
+.tour-window:focus-visible {
+    outline: 2px solid var(--st-accent);
+    outline-offset: 3px;
+}
+
+.tour-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+/* Destaques da tela atual */
+.tour-points {
+    display: grid;
+    gap: 8px;
+    margin-top: 20px;
+    list-style: none;
+}
+
+.tour-points li {
+    position: relative;
+    padding-left: 22px;
+    color: var(--st-muted);
+    font-size: 13px;
+    line-height: 1.7;
+    animation: tour-point-in 0.45s ease both;
+}
+
+.tour-points li::before {
+    content: "✳";
+    position: absolute;
+    left: 0;
+    color: var(--st-accent);
+}
+
+@keyframes tour-point-in {
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ==========================================
+   BONEQUINHO PALITO
+   Articulado em ombro, cotovelo, quadril e joelho.
+   Ângulos negativos levam o membro para a frente
+   (o desenho olha para a direita; à esquerda, é espelhado).
+   ========================================== */
+
+.stickman {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 30px;
+    height: 44px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.stickman.is-visible {
+    opacity: 1;
+}
+
+.stickman svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    transform-origin: bottom center;
+}
+
+.stickman svg * {
+    transform-box: view-box;
+}
+
+.stickman line,
+.stickman circle {
+    fill: none;
+    stroke: var(--st-accent);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+}
+
+/* Virado para a esquerda: espelha o desenho */
+.stickman-figure {
+    transform-origin: 15px 22px;
+    transition: transform 0.2s ease;
+}
+
+.stickman.is-facing-left .stickman-figure {
+    transform: scaleX(-1);
+}
+
+/* Articulações */
+
+.stickman-rig {
+    transform-origin: 15px 43px;
+    transition: transform 0.25s ease;
+}
+
+.stickman-upper {
+    transform-origin: 15px 25px;
+    transition: transform 0.25s ease;
+}
+
+.stickman-arm {
+    transform-origin: 15px 13px;
+    transition: transform 0.2s ease;
+}
+
+.stickman-forearm {
+    transform-origin: 15px 19.5px;
+    transition: transform 0.2s ease;
+}
+
+.stickman-leg {
+    transform-origin: 15px 25px;
+    transition: transform 0.2s ease;
+}
+
+.stickman-shin {
+    transform-origin: 15px 34px;
+    transition: transform 0.2s ease;
+}
+
+/* Pose parada: pés afastados, braços soltos, respirando */
+
+.stickman-leg.is-left {
+    transform: rotate(9deg);
+}
+
+.stickman-leg.is-right {
+    transform: rotate(-9deg);
+}
+
+.stickman-arm.is-left {
+    transform: rotate(14deg);
+}
+
+.stickman-arm.is-right {
+    transform: rotate(-14deg);
+}
+
+.stickman-forearm {
+    transform: rotate(-8deg);
+}
+
+.stickman:not(.is-walking):not(.is-jumping):not(.is-falling):not(.is-sitting) .stickman-rig {
+    animation: stickman-breathe 2.4s ease-in-out infinite;
+}
+
+@keyframes stickman-breathe {
+    50% {
+        transform: translateY(0.7px);
+    }
+}
+
+/* ------------------------------------------
+   CAMINHADA
+   Ciclo completo em 0,72 s. A perna direita e o braço
+   esquerdo seguem o mesmo ciclo, meio passo depois.
+   ------------------------------------------ */
+
+.stickman.is-walking .stickman-leg,
+.stickman.is-walking .stickman-shin,
+.stickman.is-walking .stickman-arm,
+.stickman.is-walking .stickman-forearm {
+    transition: none;
+    animation-duration: 0.72s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.stickman.is-walking .stickman-leg {
+    animation-name: stickman-thigh;
+}
+
+.stickman.is-walking .stickman-shin {
+    animation-name: stickman-shin;
+}
+
+.stickman.is-walking .stickman-arm {
+    animation-name: stickman-arm;
+}
+
+.stickman.is-walking .stickman-forearm {
+    animation-name: stickman-forearm;
+}
+
+.stickman.is-walking .stickman-leg.is-right,
+.stickman.is-walking .stickman-leg.is-right .stickman-shin,
+.stickman.is-walking .stickman-arm.is-left,
+.stickman.is-walking .stickman-arm.is-left .stickman-forearm {
+    animation-delay: -0.36s;
+}
+
+/* Coxa: pisa na frente, empurra para trás, volta passando por baixo */
+@keyframes stickman-thigh {
+    0%   { transform: rotate(-28deg); }
+    25%  { transform: rotate(-8deg); }
+    50%  { transform: rotate(22deg); }
+    62%  { transform: rotate(16deg); }
+    80%  { transform: rotate(-12deg); }
+    100% { transform: rotate(-28deg); }
+}
+
+/* Canela: quase reta no apoio, dobra o joelho ao passar */
+@keyframes stickman-shin {
+    0%   { transform: rotate(2deg); }
+    25%  { transform: rotate(6deg); }
+    50%  { transform: rotate(16deg); }
+    65%  { transform: rotate(48deg); }
+    80%  { transform: rotate(40deg); }
+    92%  { transform: rotate(8deg); }
+    100% { transform: rotate(2deg); }
+}
+
+/* Braço: balança ao contrário da perna do mesmo lado */
+@keyframes stickman-arm {
+    0%   { transform: rotate(24deg); }
+    50%  { transform: rotate(-26deg); }
+    100% { transform: rotate(24deg); }
+}
+
+/* Antebraço: dobra mais quando o braço vai à frente */
+@keyframes stickman-forearm {
+    0%   { transform: rotate(-6deg); }
+    50%  { transform: rotate(-38deg); }
+    100% { transform: rotate(-6deg); }
+}
+
+/* O corpo sobe e desce duas vezes por ciclo e inclina para a frente */
+.stickman.is-walking .stickman-rig {
+    animation: stickman-bob 0.36s ease-in-out infinite alternate;
+}
+
+.stickman.is-walking .stickman-upper {
+    transform: rotate(5deg);
+}
+
+@keyframes stickman-bob {
+    from {
+        transform: translateY(0.6px);
+    }
+
+    to {
+        transform: translateY(-1.4px);
+    }
+}
+
+/* ------------------------------------------
+   OUTRAS POSES
+   ------------------------------------------ */
+
+/* Pulando: braços para cima, joelhos encolhidos */
+.stickman.is-jumping .stickman-arm.is-left {
+    transform: rotate(145deg);
+}
+
+.stickman.is-jumping .stickman-arm.is-right {
+    transform: rotate(-145deg);
+}
+
+.stickman.is-jumping .stickman-forearm {
+    transform: rotate(0deg);
+}
+
+.stickman.is-jumping .stickman-leg.is-left {
+    transform: rotate(-45deg);
+}
+
+.stickman.is-jumping .stickman-leg.is-left .stickman-shin {
+    transform: rotate(80deg);
+}
+
+.stickman.is-jumping .stickman-leg.is-right {
+    transform: rotate(-12deg);
+}
+
+.stickman.is-jumping .stickman-leg.is-right .stickman-shin {
+    transform: rotate(70deg);
+}
+
+/* Caindo: braços abertos, pernas soltas */
+.stickman.is-falling .stickman-arm.is-left {
+    transform: rotate(115deg);
+}
+
+.stickman.is-falling .stickman-arm.is-right {
+    transform: rotate(-115deg);
+}
+
+.stickman.is-falling .stickman-arm.is-left .stickman-forearm {
+    transform: rotate(25deg);
+}
+
+.stickman.is-falling .stickman-arm.is-right .stickman-forearm {
+    transform: rotate(-25deg);
+}
+
+.stickman.is-falling .stickman-leg.is-left {
+    transform: rotate(14deg);
+}
+
+.stickman.is-falling .stickman-leg.is-right {
+    transform: rotate(-20deg);
+}
+
+.stickman.is-falling .stickman-shin {
+    transform: rotate(22deg);
+}
+
+/* Chute no vidro: perna da frente esticada, corpo para trás */
+.stickman.is-kicking .stickman-leg.is-right {
+    transform: rotate(-88deg);
+}
+
+.stickman.is-kicking .stickman-leg.is-right .stickman-shin {
+    transform: rotate(-4deg);
+}
+
+.stickman.is-kicking .stickman-leg.is-left {
+    transform: rotate(8deg);
+}
+
+.stickman.is-kicking .stickman-upper {
+    transform: rotate(-10deg);
+}
+
+.stickman.is-kicking .stickman-arm.is-left {
+    transform: rotate(-40deg);
+}
+
+.stickman.is-kicking .stickman-arm.is-right {
+    transform: rotate(55deg);
+}
+
+/* Comemorando: braços para cima e pulinhos */
+.stickman.is-cheering .stickman-arm.is-left {
+    transform: rotate(140deg);
+}
+
+.stickman.is-cheering .stickman-arm.is-right {
+    transform: rotate(-140deg);
+}
+
+.stickman.is-cheering .stickman-arm.is-left .stickman-forearm {
+    transform: rotate(-25deg);
+}
+
+.stickman.is-cheering .stickman-arm.is-right .stickman-forearm {
+    transform: rotate(25deg);
+}
+
+.stickman.is-cheering svg {
+    animation: stickman-hop 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes stickman-hop {
+    to {
+        transform: translateY(-6px);
+    }
+}
+
+/* Fincando a bandeira: o braço desce com força */
+.stickman.is-planting .stickman-arm.is-right {
+    animation: stickman-hammer 0.38s ease-in;
+}
+
+@keyframes stickman-hammer {
+    from {
+        transform: rotate(-170deg);
+    }
+
+    to {
+        transform: rotate(-30deg);
+    }
+}
+
+/* ------------------------------------------
+   PAUSADO: SENTADO DE FRENTE
+   O quadril fica na borda do card e as pernas
+   ficam penduradas para dentro dele.
+   ------------------------------------------ */
+
+.stickman.is-sitting .stickman-figure {
+    transform: none;
+}
+
+.stickman.is-sitting .stickman-rig {
+    animation: none;
+    transform: translateY(18px);
+}
+
+.stickman.is-sitting .stickman-upper {
+    transform: none;
+}
+
+.stickman.is-sitting .stickman-leg,
+.stickman.is-sitting .stickman-arm,
+.stickman.is-sitting .stickman-forearm {
+    animation: none;
+}
+
+.stickman.is-sitting .stickman-leg.is-left {
+    transform: rotate(7deg);
+}
+
+.stickman.is-sitting .stickman-leg.is-right {
+    transform: rotate(-7deg);
+}
+
+/* Pernas balançando: a canela vai e volta na direção de quem olha */
+.stickman.is-sitting .stickman-shin {
+    animation: stickman-dangle 1.3s ease-in-out infinite alternate;
+}
+
+.stickman.is-sitting .stickman-leg.is-right .stickman-shin {
+    animation-delay: -0.65s;
+}
+
+@keyframes stickman-dangle {
+    from {
+        transform: scaleY(1);
+    }
+
+    to {
+        transform: scaleY(0.62);
+    }
+}
+
+/* Braços abertos, com as mãos apoiadas no card */
+.stickman.is-sitting .stickman-arm.is-left {
+    transform: rotate(40deg);
+}
+
+.stickman.is-sitting .stickman-arm.is-right {
+    transform: rotate(-40deg);
+}
+
+.stickman.is-sitting .stickman-forearm {
+    transform: rotate(0deg);
+}
+
+/* ------------------------------------------
+   GRACINHAS (sentado há algum tempo)
+   O screen-tour.js alterna entre elas.
+   ------------------------------------------ */
+
+/* Tchauzinho com uma mão */
+.stickman.is-sitting.is-trick-wave .stickman-arm.is-right {
+    transform: rotate(-125deg);
+}
+
+.stickman.is-sitting.is-trick-wave .stickman-arm.is-right .stickman-forearm {
+    animation: stickman-wave 0.28s ease-in-out infinite alternate;
+}
+
+@keyframes stickman-wave {
+    from {
+        transform: rotate(-35deg);
+    }
+
+    to {
+        transform: rotate(30deg);
+    }
+}
+
+/* Mostrando o muque: ombros um pouco mais baixos (para os braços
+   não colarem na cabeça), braços abertos em diagonal, antebraços
+   para cima e um músculo estufando em cada braço */
+.stickman.is-sitting.is-trick-flex .stickman-arm.is-left {
+    transform: translateY(3px) rotate(65deg);
+}
+
+.stickman.is-sitting.is-trick-flex .stickman-arm.is-right {
+    transform: translateY(3px) rotate(-65deg);
+}
+
+.stickman.is-sitting.is-trick-flex .stickman-arm.is-left .stickman-forearm {
+    transform: rotate(95deg);
+}
+
+.stickman.is-sitting.is-trick-flex .stickman-arm.is-right .stickman-forearm {
+    transform: rotate(-95deg);
+}
+
+/* Tremidinha de esforço */
+.stickman.is-sitting.is-trick-flex .stickman-upper {
+    animation: stickman-strain 0.09s linear 0.5s infinite alternate;
+}
+
+@keyframes stickman-strain {
+    from {
+        transform: translateX(-0.25px);
+    }
+
+    to {
+        transform: translateX(0.25px);
+    }
+}
+
+/* Músculo: uma curvinha sobre o braço, que estufa em dois tempos */
+.stickman .stickman-bicep {
+    fill: var(--st-accent);
+    stroke: var(--st-accent);
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+    transform: scaleX(0);
+    transform-origin: 15px 16.5px;
+}
+
+.stickman.is-sitting.is-trick-flex .stickman-bicep {
+    animation: stickman-bicep 1.4s ease-out 0.3s both;
+}
+
+@keyframes stickman-bicep {
+    0%   { transform: scaleX(0); }
+    30%  { transform: scaleX(0.9); }
+    45%  { transform: scaleX(0.6); }
+    70%  { transform: scaleX(1.35); }
+    100% { transform: scaleX(1.2); }
+}
+
+/* Tchau com os dois braços no alto */
+.stickman.is-sitting.is-trick-double .stickman-arm.is-left {
+    transform: rotate(125deg);
+}
+
+.stickman.is-sitting.is-trick-double .stickman-arm.is-right {
+    transform: rotate(-125deg);
+}
+
+.stickman.is-sitting.is-trick-double .stickman-forearm {
+    animation: stickman-wave 0.28s ease-in-out infinite alternate;
+}
+
+.stickman.is-sitting.is-trick-double .stickman-arm.is-left .stickman-forearm {
+    animation-direction: alternate-reverse;
+}
+
+/* Fora da tela, as animações em loop param */
+.tour.is-offscreen .stickman * {
+    animation-play-state: paused;
+}
+
+/* ==========================================
+   BANDEIRINHAS
+   ========================================== */
+
+.tour-flag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 22px;
+    height: 34px;
+    pointer-events: none;
+}
+
+.tour-flag svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.flag-pole {
+    stroke: var(--st-text-soft);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+}
+
+.flag-cloth {
+    fill: var(--st-accent);
+    transform-box: fill-box;
+    transform-origin: left center;
+    animation: flag-wave 1.6s ease-in-out infinite;
+}
+
+@keyframes flag-wave {
+    50% {
+        transform: skewY(-8deg) scaleX(0.9);
+    }
+}
+
+/* ==========================================
+   VIDRO
+   Fica em pé no card, entre dois prints da mesma tela.
+   ========================================== */
+
+.tour-glass {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 14px;
+    height: 48px;
+    pointer-events: none;
+    animation: glass-in 0.4s ease both;
+}
+
+/* Só a opacidade: o transform guarda a posição do vidro */
+@keyframes glass-in {
+    from {
+        opacity: 0;
+    }
+}
+
+.tour-glass svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.glass-pane rect {
+    fill: color-mix(in srgb, var(--st-accent) 10%, transparent);
+    stroke: var(--st-accent-muted);
+    stroke-width: 0.8;
+}
+
+.glass-shine {
+    stroke: rgba(255, 255, 255, 0.45);
+    stroke-width: 0.8;
+    stroke-linecap: round;
+}
+
+/* Rachaduras: desenhadas do centro para fora ao serem reveladas */
+.glass-cracks path {
+    fill: none;
+    stroke: var(--st-accent);
+    stroke-width: 0.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+}
+
+/* Cacos: escondidos até o vidro estourar */
+.glass-shards polygon {
+    fill: color-mix(in srgb, var(--st-accent) 28%, transparent);
+    stroke: var(--st-accent);
+    stroke-width: 0.7;
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+}
+
+/* Rachado: o vidro treme */
+.tour-glass.is-cracked svg {
+    animation: glass-shake 0.18s linear 2;
+}
+
+@keyframes glass-shake {
+    25% {
+        transform: translateX(-1px);
+    }
+
+    75% {
+        transform: translateX(1px);
+    }
+}
+
+.tour-glass.is-shattered .glass-pane,
+.tour-glass.is-shattered .glass-cracks {
+    display: none;
+}
+
+.tour-glass.is-shattered .glass-shards polygon {
+    opacity: 1;
+}
+
+/* ==========================================
+   IMAGEM AMPLIADA
+   ========================================== */
+
+.tour-lightbox {
+    max-width: none;
+    max-height: none;
+    width: 100%;
+    height: 100%;
+    padding: 28px;
+    border: 0;
+    background: transparent;
+}
+
+.tour-lightbox[open] {
+    display: grid;
+    place-items: center;
+}
+
+.tour-lightbox::backdrop {
+    background: rgba(3, 5, 4, 0.92);
+    backdrop-filter: blur(8px);
+}
+
+.tour-lightbox-scroll {
+    max-width: 100%;
+    max-height: calc(100vh - 56px);
+    overflow: auto;
+    border: 1px solid var(--st-border);
+    animation: tour-lightbox-in 0.35s ease;
+}
+
+.tour-lightbox-scroll img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 58px);
+}
+
+@keyframes tour-lightbox-in {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.tour-lightbox-close {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--st-border);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--st-text);
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.2s ease;
+}
+
+.tour-lightbox-close:hover {
+    border-color: var(--st-accent);
+    transform: rotate(90deg);
+}
+
+/* ==========================================
+   RESPONSIVIDADE
+   No celular, os cards ficam em coluna única
+   para o zigue-zague funcionar igual.
+   ========================================== */
+
+@media (max-width: 900px) {
+    .tour {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .tour-list {
+        padding-right: 24px;
+        padding-left: 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    .tour-card {
+        padding: 12px 14px;
+    }
+
+    .tour-device {
+        padding: 0 5px 5px;
+        border-radius: 9px;
+    }
+
+    .tour-lightbox {
+        padding: 12px;
+    }
+
+    .tour-lightbox-scroll,
+    .tour-lightbox-scroll img {
+        max-height: calc(100vh - 24px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stickman *,
+    .flag-cloth,
+    .tour-glass,
+    .tour-points li,
+    .tour-lightbox-scroll {
+        animation: none !important;
+        transition: none !important;
+    }
+}

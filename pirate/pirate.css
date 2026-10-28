@@ -17,12 +17,8 @@
     isolation: isolate;
 }
 
-.detail-hero-image > img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/* Slideshow do topo (componente em css/global.css) */
+.detail-hero-image .slideshow-slide {
     object-position: center 45%;
 }
 

@@ -126,6 +126,30 @@
     box-shadow: 0 40px 140px rgba(0, 0, 0, 0.55);
 }
 
+/* Barra de rolagem da janela, fina e com o destaque da apresentação */
+
+.video-presentation-window {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--vp-accent) 35%, transparent) transparent;
+}
+
+.video-presentation-window::-webkit-scrollbar {
+    width: 8px;
+}
+
+.video-presentation-window::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.video-presentation-window::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--vp-accent) 35%, transparent);
+}
+
+.video-presentation-window::-webkit-scrollbar-thumb:hover {
+    background: var(--vp-accent);
+}
+
 /* ==========================================
    PLAYER AMPLIADO
    ========================================== */
@@ -314,6 +338,126 @@
     line-height: 1.9;
 }
 
+/* Com destaques, o texto extra vem logo abaixo deles. */
+.video-presentation-highlights + .video-presentation-extra {
+    margin-top: 18px;
+}
+
+/* ==========================================
+   DESTAQUES DO VER MAIS
+   Botões com as funções do vídeo e o texto
+   do destaque selecionado.
+   ========================================== */
+
+.video-presentation-highlights {
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-presentation-highlights-label {
+    margin: 0 0 12px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: var(--vp-mono);
+    font-size: 9px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+.video-presentation-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.video-presentation-chip {
+    padding: 6px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.68);
+    font-family: var(--vp-mono);
+    font-size: 11px;
+    line-height: 1.3;
+    cursor: pointer;
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.video-presentation-chip:hover {
+    border-color: color-mix(in srgb, var(--vp-accent) 55%, transparent);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.video-presentation-chip:focus-visible {
+    outline: 2px solid var(--vp-accent);
+    outline-offset: 2px;
+}
+
+.video-presentation-chip.is-active {
+    border-color: var(--vp-accent);
+    background: color-mix(in srgb, var(--vp-accent) 14%, transparent);
+    color: var(--vp-accent);
+}
+
+/* Ao abrir o Ver mais, os botões entram um após o outro. */
+.video-presentation-more.is-expanded .video-presentation-chip {
+    animation: video-presentation-chip-in 0.45s ease both;
+    animation-delay: calc(var(--chip-index, 0) * 70ms + 0.15s);
+}
+
+@keyframes video-presentation-chip-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Quadro com o texto do destaque selecionado */
+.video-presentation-highlight {
+    margin-top: 14px;
+    padding: 13px 15px;
+    overflow: hidden;
+    border-left: 2px solid var(--vp-accent);
+    border-radius: 0 8px 8px 0;
+    background: color-mix(in srgb, var(--vp-accent) 5%, transparent);
+    transition: height 0.35s ease;
+}
+
+.video-presentation-highlight-text {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* O novo texto aparece deslizando de leve. */
+.video-presentation-highlight-text.is-entering {
+    animation: video-presentation-highlight-in 0.45s ease both;
+}
+
+@keyframes video-presentation-highlight-in {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+        filter: blur(3px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+        filter: blur(0);
+    }
+}
+
 .video-presentation-toggle {
     display: inline-flex;
     align-items: center;
@@ -441,6 +585,9 @@
     .video-presentation-video-area,
     .video-presentation-info,
     .video-presentation-more,
+    .video-presentation-chip,
+    .video-presentation-highlight,
+    .video-presentation-highlight-text,
     .video-presentation-toggle-arrow {
         animation: none !important;
         transition: none !important;

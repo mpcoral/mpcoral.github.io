@@ -35,6 +35,10 @@
  *   data-title      Título do painel.
  *   data-summary    Texto principal do painel.
  *   data-extra      Texto do "Ver mais". Sem ele, o botão some.
+ *   data-highlights Destaques do "Ver mais", em JSON: uma lista de
+ *                   { "name": "NextWave", "text": "Explicação..." }.
+ *                   Cada nome vira um botão; ao clicar, o texto
+ *                   dele aparece logo abaixo.
  *   data-eyebrow    Linha pequena acima do título.
  *   data-context    Texto no topo do player.
  *   data-label      Legenda abaixo do player.
@@ -53,6 +57,13 @@
  *
  *   VideoPresentation.open({ title: "...", src: "..." }, elemento);
  *   VideoPresentation.close();
+ *
+ *   // Pelo JavaScript, os destaques podem ser passados direto:
+ *   VideoPresentation.open({
+ *       title: "GM Core",
+ *       src: "videos/gm-core.mp4",
+ *       highlights: [{ name: "NextWave", text: "..." }]
+ *   }, elemento);
  *
  *   // Textos padrão usados quando o vídeo não define o seu:
  *   VideoPresentation.setDefaults({ footer: "MIGUEL CORAL" });
@@ -88,6 +99,7 @@
         footer: "",
         moreLabel: "Ver mais",
         lessLabel: "Ver menos",
+        highlightsLabel: "DESTAQUES DO VÍDEO",
         closeLabel: "Fechar apresentação"
     };
 
@@ -188,6 +200,19 @@
 
                     <div class="video-presentation-more">
                         <div class="video-presentation-more-inner">
+                            <div class="video-presentation-highlights">
+                                <p class="video-presentation-highlights-label"></p>
+
+                                <div class="video-presentation-chips"></div>
+
+                                <div
+                                    class="video-presentation-highlight"
+                                    aria-live="polite"
+                                >
+                                    <p class="video-presentation-highlight-text"></p>
+                                </div>
+                            </div>
+
                             <p class="video-presentation-extra"></p>
                         </div>
                     </div>
@@ -275,6 +300,132 @@
             : defaults.lessLabel;
 
         morePanel.classList.toggle("is-expanded", !expanded);
+    }
+
+    // ==========================================
+    // DESTAQUES DO VER MAIS
+    // ==========================================
+
+    let currentHighlights = [];
+    let highlightHeightTimer = null;
+
+    // Cria um botão para cada destaque e já abre o primeiro.
+    function renderHighlights(highlights) {
+        const container = presentationOverlay.querySelector(
+            ".video-presentation-highlights"
+        );
+
+        const label = presentationOverlay.querySelector(
+            ".video-presentation-highlights-label"
+        );
+
+        const chips = presentationOverlay.querySelector(
+            ".video-presentation-chips"
+        );
+
+        currentHighlights = highlights;
+
+        chips.replaceChildren();
+        label.textContent = defaults.highlightsLabel;
+        container.hidden = !highlights.length;
+
+        highlights.forEach((highlight, index) => {
+            const chip = document.createElement("button");
+
+            chip.type = "button";
+            chip.className = "video-presentation-chip";
+            chip.textContent = highlight.name;
+            chip.setAttribute("aria-pressed", "false");
+
+            // Usado no CSS para os botões entrarem um após o outro.
+            chip.style.setProperty("--chip-index", index);
+
+            chip.addEventListener("click", () => {
+                selectHighlight(index, true);
+            });
+
+            chips.appendChild(chip);
+        });
+
+        if (highlights.length) {
+            selectHighlight(0, false);
+        }
+    }
+
+    function selectHighlight(index, animate) {
+        const highlight = currentHighlights[index];
+
+        if (!highlight) {
+            return;
+        }
+
+        const chips = presentationOverlay.querySelectorAll(
+            ".video-presentation-chip"
+        );
+
+        const panel = presentationOverlay.querySelector(
+            ".video-presentation-highlight"
+        );
+
+        const text = presentationOverlay.querySelector(
+            ".video-presentation-highlight-text"
+        );
+
+        chips.forEach((chip, chipIndex) => {
+            const isActive = chipIndex === index;
+
+            chip.classList.toggle("is-active", isActive);
+            chip.setAttribute("aria-pressed", String(isActive));
+        });
+
+        if (!animate) {
+            text.textContent = highlight.text;
+            return;
+        }
+
+        // A altura do quadro acompanha o tamanho do novo texto.
+        const previousHeight = panel.offsetHeight;
+
+        text.textContent = highlight.text;
+
+        clearTimeout(highlightHeightTimer);
+        panel.style.height = "";
+
+        const nextHeight = panel.offsetHeight;
+
+        panel.style.height = `${previousHeight}px`;
+        void panel.offsetHeight;
+        panel.style.height = `${nextHeight}px`;
+
+        highlightHeightTimer = setTimeout(() => {
+            panel.style.height = "";
+        }, 400);
+
+        // Reinicia a animação de entrada do texto.
+        text.classList.remove("is-entering");
+        void text.offsetWidth;
+        text.classList.add("is-entering");
+    }
+
+    // Aceita a lista pronta ou o JSON vindo do data-highlights.
+    function parseHighlights(value) {
+        let list = value;
+
+        if (typeof value === "string") {
+            try {
+                list = JSON.parse(value);
+            } catch {
+                return [];
+            }
+        }
+
+        if (!Array.isArray(list)) {
+            return [];
+        }
+
+        return list.filter(
+            (item) => item && item.name && item.text
+        );
     }
 
 
@@ -371,6 +522,9 @@
 
         const total = videoData.total ?? videoData.totalVideos;
 
+        const highlights = parseHighlights(videoData.highlights);
+        const hasMore = Boolean(extra) || highlights.length > 0;
+
         morePanel.classList.remove("is-expanded");
 
         toggleButton.setAttribute("aria-expanded", "false");
@@ -397,14 +551,17 @@
 
         extraDescription.textContent = extra;
 
+        renderHighlights(highlights);
+
         footer.textContent = videoData.footer ?? defaults.footer;
 
         // Partes sem texto ficam ocultas.
         summary.hidden = !summary.textContent;
         eyebrow.hidden = !eyebrow.textContent;
         footer.hidden = !footer.textContent;
-        morePanel.hidden = !extra;
-        toggleButton.hidden = !extra;
+        extraDescription.hidden = !extra;
+        morePanel.hidden = !hasMore;
+        toggleButton.hidden = !hasMore;
     }
 
     // ==========================================
@@ -1254,6 +1411,7 @@
         "title",
         "summary",
         "extra",
+        "highlights",
         "eyebrow",
         "context",
         "label",

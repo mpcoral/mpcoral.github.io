@@ -6,9 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#101110">
     <meta name="description"
-        content="Detalhes, gameplay e mecânicas do projeto Pirata, desenvolvido na Unreal Engine 5 por Miguel Coral.">
+        content="Detalhes, gameplay e mecânicas do projeto Pirata, desenvolvido na Unreal Engine 5 por Miguel Coral."
+        data-en-attrs='{"content":"Details, gameplay and mechanics of the Pirate project, built with Unreal Engine 5 by Miguel Coral."}'>
 
-    <title>Pirata — Miguel Coral</title>
+    <!-- PRÉVIA DE LINK (LinkedIn, WhatsApp, Discord, X...) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Miguel Coral">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:url" content="https://mpcoral.github.io/pirate/pirate.html">
+    <meta property="og:title" content="Pirata — Miguel Coral">
+    <meta property="og:description" content="Jogo em Unreal Engine 5: ondas de inimigos, IA, interação, loja e menus feitos em Blueprints.">
+    <meta property="og:image" content="https://mpcoral.github.io/assets/og/og-pirate.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Projeto Pirata, feito em Unreal Engine 5.">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <title data-en="Pirate — Miguel Coral">Pirata — Miguel Coral</title>
 
     <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 
@@ -22,7 +37,8 @@
     <header class="site-header">
         <div class="container header-inner">
 
-            <a class="brand" href="../index.html" aria-label="Voltar ao portfólio">
+            <a class="brand" href="../index.html" aria-label="Voltar ao portfólio"
+                data-en-attrs='{"aria-label":"Back to portfolio"}'>
                 <span class="brand-mark">MC.</span>
 
                 <span class="brand-name">
@@ -31,11 +47,18 @@
                 </span>
             </a>
 
-            <nav class="nav" aria-label="Navegação principal">
-                <a href="../index.html">Início</a>
-                <a href="#overview">O projeto</a>
+            <nav class="nav" aria-label="Navegação principal" data-en-attrs='{"aria-label":"Main navigation"}'>
+                <a href="../index.html" data-en="Home">Início</a>
+                <a href="#overview" data-en="The project">O projeto</a>
                 <a href="#gameplay">Gameplay</a>
-                <a href="#gallery">Elementos do jogo</a>
+                <a href="#gallery" data-en="Game elements">Elementos do jogo</a>
+
+                <!-- IDIOMA (js/i18n.js) -->
+                <button class="lang-toggle" type="button" data-lang-toggle>
+                    <span data-lang="pt">PT</span>
+                    <span class="lang-toggle-divider" aria-hidden="true">/</span>
+                    <span data-lang="en">EN</span>
+                </button>
             </nav>
 
         </div>
@@ -45,7 +68,7 @@
 
         <div class="container">
 
-            <a class="back-link mono" href="../index.html#projects">
+            <a class="back-link mono" href="../index.html#projects" data-en="← BACK TO PROJECTS">
                 ← VOLTAR AOS PROJETOS
             </a>
 
@@ -55,17 +78,39 @@
 
                 <div class="detail-hero-image">
 
-                    <img src="../assets/pirate/images/ship.png" alt="Navio presente no jogo Pirata">
+                    <!-- SLIDESHOW (componente em js/slideshow.js; cópias leves em images/slideshow) -->
+
+                    <div class="slideshow" data-interval="6000">
+                        <img class="slideshow-slide is-active"
+                            src="../assets/pirate/images/slideshow/ship-beach.jpg"
+                            alt="Navio do jogo Pirata ancorado na praia"
+                            data-en-attrs='{"alt":"Ship from the Pirate game anchored at the beach"}'>
+
+                        <img class="slideshow-slide"
+                            src="../assets/pirate/images/slideshow/island-overview.jpg"
+                            alt="Vista aérea da ilha com as ruínas do templo" aria-hidden="true"
+                            data-en-attrs='{"alt":"Aerial view of the island with the temple ruins"}'>
+
+                        <img class="slideshow-slide"
+                            src="../assets/pirate/images/slideshow/fire.jpg"
+                            alt="Braseiro aceso entre colunas ao entardecer" aria-hidden="true"
+                            data-en-attrs='{"alt":"Lit brazier between columns at sunset"}'>
+
+                        <img class="slideshow-slide"
+                            src="../assets/pirate/images/slideshow/candles.jpg"
+                            alt="Velas acesas no templo da ilha" aria-hidden="true"
+                            data-en-attrs='{"alt":"Lit candles in the island temple"}'>
+                    </div>
 
                     <div class="detail-image-gradient"></div>
 
-                    <div class="detail-hero-label mono">
+                    <div class="detail-hero-label mono" data-en="PROJECT 001 · GAME DEVELOPMENT">
                         PROJETO 001 · GAME DEVELOPMENT
                     </div>
 
                     <div class="detail-hero-title">
                         <p class="mono">UNREAL ENGINE 5 / BLUEPRINTS</p>
-                        <h1>PIRATA<span>.</span></h1>
+                        <h1 data-en-html="PIRATE<span>.</span>">PIRATA<span>.</span></h1>
                     </div>
 
                 </div>
@@ -74,18 +119,18 @@
 
                     <div class="detail-description">
 
-                        <p class="section-label mono">SOBRE O PROJETO</p>
+                        <p class="section-label mono" data-en="ABOUT THE PROJECT">SOBRE O PROJETO</p>
 
-                        <h2>Um projeto de jogo construído sistema por sistema.</h2>
+                        <h2 data-en="A game project built system by system.">Um projeto de jogo construído sistema por sistema.</h2>
 
-                        <p>
+                        <p data-en="Pirate is a project built with Unreal Engine 5, focused on implementing gameplay mechanics, combat, object interaction and enemy management.">
                             Pirata é um projeto desenvolvido na Unreal Engine 5,
                             com foco na implementação de mecânicas de gameplay,
                             combate, interação com objetos e gerenciamento
                             de inimigos.
                         </p>
 
-                        <p>
+                        <p data-en="During development, I built systems with Blueprints, including combat control, enemy waves and win and lose conditions. The project was made as part of a course, with guidance and some free assets provided during the lessons.">
                             Durante o desenvolvimento, foram construídos sistemas
                             utilizando Blueprints, incluindo controle de combate,
                             ondas de inimigos e condições de vitória e derrota.
@@ -99,8 +144,8 @@
                     <aside class="detail-facts">
 
                         <div>
-                            <span class="mono">TIPO</span>
-                            <strong>Desenvolvimento de jogo</strong>
+                            <span class="mono" data-en="TYPE">TIPO</span>
+                            <strong data-en="Game development">Desenvolvimento de jogo</strong>
                         </div>
 
                         <div>
@@ -109,13 +154,13 @@
                         </div>
 
                         <div>
-                            <span class="mono">PROGRAMAÇÃO</span>
+                            <span class="mono" data-en="PROGRAMMING">PROGRAMAÇÃO</span>
                             <strong>Blueprint Visual Scripting</strong>
                         </div>
 
                         <div>
-                            <span class="mono">SISTEMAS</span>
-                            <strong>Combate · Inimigos · Interações</strong>
+                            <span class="mono" data-en="SYSTEMS">SISTEMAS</span>
+                            <strong data-en="Combat · Enemies · Interactions">Combate · Inimigos · Interações</strong>
                         </div>
 
                     </aside>
@@ -132,10 +177,11 @@
 
                     <div>
                         <p class="section-label mono">01 / GAMEPLAY</p>
-                        <h2>Veja o projeto em ação.</h2>
+                        <h2 data-en="See the project in action.">Veja o projeto em ação.</h2>
                     </div>
 
-                    <p class="section-intro">
+                    <p class="section-intro"
+                        data-en="A visual demo of the experience and the mechanics implemented in the game.">
                         Demonstração visual da experiência e das mecânicas
                         implementadas no jogo.
                     </p>
@@ -152,7 +198,7 @@
                     </video>
 
                     <div class="video-caption">
-                        <span class="mono">PIRATA — GAMEPLAY</span>
+                        <span class="mono" data-en="PIRATE — GAMEPLAY">PIRATA — GAMEPLAY</span>
                         <span class="mono">UNREAL ENGINE 5</span>
                     </div>
 
@@ -167,11 +213,12 @@
                 <div class="section-heading">
 
                     <div>
-                        <p class="section-label mono">02 / ELEMENTOS DO JOGO</p>
-                        <h2>Explore as mecânicas.</h2>
+                        <p class="section-label mono" data-en="02 / GAME ELEMENTS">02 / ELEMENTOS DO JOGO</p>
+                        <h2 data-en="Explore the mechanics.">Explore as mecânicas.</h2>
                     </div>
 
-                    <p class="section-intro">
+                    <p class="section-intro"
+                        data-en="Select an element to learn more about the systems and mechanics in the project.">
                         Selecione um elemento para conhecer melhor os sistemas
                         e as mecânicas presentes no projeto.
                     </p>
@@ -184,17 +231,18 @@
 
                     <button class="element-card is-active" type="button" data-system="wave-system"
                         data-title="Wave System"
-                        data-description="Um sistema responsável por organizar as ondas de inimigos, controlar os spawns e distribuir os adversários durante a partida. Confira a lógica dos Blueprints e a execução do sistema no jogo.">
+                        data-description="Um sistema responsável por organizar as ondas de inimigos, controlar os spawns e distribuir os adversários durante a partida. Confira a lógica dos Blueprints e a execução do sistema no jogo."
+                        data-en-attrs='{"data-title":"Wave System","data-description":"A system that organizes the enemy waves, controls the spawns and distributes the enemies throughout the match. See the Blueprint logic and the system running in the game."}'>
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/wave-system.png" alt="Ondas de inimigos no Wave System" loading="lazy">
+                            <img src="../assets/pirate/images/wave-system.png" alt="Ondas de inimigos no Wave System" data-en-attrs='{"alt":"Enemy waves in the Wave System"}' loading="lazy">
 
                             <span class="element-number mono">01</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Wave System</span>
-                        <span class="element-card-hint mono">VER DETALHES +</span>
+                        <span class="element-card-title" data-en="Wave System">Wave System</span>
+                        <span class="element-card-hint mono" data-en="VIEW DETAILS +">VER DETALHES +</span>
 
                     </button>
 
@@ -202,17 +250,18 @@
 
                     <button class="element-card" type="button" data-system="enemy-ai"
                         data-title="IA e defesa do navio"
-                        data-description="Os inimigos escolhem um alvo, cercam o navio em posições de ataque e causam dano tanto ao navio quanto ao jogador. Se o navio for destruído, a partida é perdida. Confira a lógica da IA e o sistema em ação.">
+                        data-description="Os inimigos escolhem um alvo, cercam o navio em posições de ataque e causam dano tanto ao navio quanto ao jogador. Se o navio for destruído, a partida é perdida. Confira a lógica da IA e o sistema em ação."
+                        data-en-attrs='{"data-title":"Enemy AI and ship defense","data-description":"Enemies pick a target, surround the ship in attack positions and damage both the ship and the player. If the ship is destroyed, the match is lost. See the AI logic and the system in action."}'>
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/enemy-ai.png" alt="Inimigos cercando o navio" loading="lazy">
+                            <img src="../assets/pirate/images/enemy-ai.png" alt="Inimigos cercando o navio" data-en-attrs='{"alt":"Enemies surrounding the ship"}' loading="lazy">
 
                             <span class="element-number mono">02</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">IA e defesa do navio</span>
-                        <span class="element-card-hint mono">VER DETALHES +</span>
+                        <span class="element-card-title" data-en="Enemy AI and ship defense">IA e defesa do navio</span>
+                        <span class="element-card-hint mono" data-en="VIEW DETAILS +">VER DETALHES +</span>
 
                     </button>
 
@@ -220,18 +269,19 @@
 
                     <button class="element-card" type="button" data-system="store"
                         data-title="Loja"
-                        data-description="Uma loja aberta durante a partida que troca as moedas coletadas por vida, munição e barris explosivos. Os preços e as quantidades vêm de uma Data Table, e a compra só acontece quando o jogador tem moedas suficientes.">
+                        data-description="Uma loja aberta durante a partida que troca as moedas coletadas por vida, munição e barris explosivos. Os preços e as quantidades vêm de uma Data Table, e a compra só acontece quando o jogador tem moedas suficientes."
+                        data-en-attrs='{"data-title":"Store","data-description":"A store opened during the match that trades collected coins for health, ammo and explosive barrels. Prices and quantities come from a Data Table, and a purchase only goes through when the player has enough coins."}'>
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/store.png" alt="Loja do jogo"
+                            <img src="../assets/pirate/images/store.png" alt="Loja do jogo" data-en-attrs='{"alt":"In-game store"}'
                                 loading="lazy">
 
                             <span class="element-number mono">03</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Loja</span>
-                        <span class="element-card-hint mono">VER DETALHES +</span>
+                        <span class="element-card-title" data-en="Store">Loja</span>
+                        <span class="element-card-hint mono" data-en="VIEW DETAILS +">VER DETALHES +</span>
 
                     </button>
 
@@ -239,17 +289,18 @@
 
                     <button class="element-card" type="button" data-system="interaction"
                         data-title="Sistema de interação"
-                        data-description="Um sistema reutilizável que detecta os objetos na mira do jogador e permite interagir com eles, com um toque ou segurando o botão. Ele vai do consumo de itens até carregar o baú de ouro e entregá-lo ao navio, o que inicia a partida.">
+                        data-description="Um sistema reutilizável que detecta os objetos na mira do jogador e permite interagir com eles, com um toque ou segurando o botão. Ele vai do consumo de itens até carregar o baú de ouro e entregá-lo ao navio, o que inicia a partida."
+                        data-en-attrs='{"data-title":"Interaction system","data-description":"A reusable system that detects the objects the player is aiming at and lets them interact with a tap or by holding the button. It goes from consuming items to carrying the gold chest and delivering it to the ship, which starts the match."}'>
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/bottle.png" alt="Garrafa interagível do jogo" loading="lazy">
+                            <img src="../assets/pirate/images/bottle.png" alt="Garrafa interagível do jogo" data-en-attrs='{"alt":"Interactable bottle in the game"}' loading="lazy">
 
                             <span class="element-number mono">04</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Sistema de interação</span>
-                        <span class="element-card-hint mono">VER DETALHES +</span>
+                        <span class="element-card-title" data-en="Interaction system">Sistema de interação</span>
+                        <span class="element-card-hint mono" data-en="VIEW DETAILS +">VER DETALHES +</span>
 
                     </button>
 
@@ -257,18 +308,19 @@
 
                     <button class="element-card" type="button" data-system="explosive-barrel"
                         data-title="Barril explosivo"
-                        data-description="Os barris comprados na loja podem ser posicionados no mapa mirando onde colocá-los. Ao receberem dano, explodem, causando dano em área e lançando os inimigos com força física. Confira a lógica do posicionamento e da explosão.">
+                        data-description="Os barris comprados na loja podem ser posicionados no mapa mirando onde colocá-los. Ao receberem dano, explodem, causando dano em área e lançando os inimigos com força física. Confira a lógica do posicionamento e da explosão."
+                        data-en-attrs='{"data-title":"Explosive barrel","data-description":"Barrels bought in the store can be placed on the map by aiming where to put them. When damaged, they explode, dealing area damage and launching enemies with physics force. See the placement and explosion logic."}'>
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/explosive-barrel.png" alt="Barril explosivo"
+                            <img src="../assets/pirate/images/explosive-barrel.png" alt="Barril explosivo" data-en-attrs='{"alt":"Explosive barrel"}'
                                 loading="lazy">
 
                             <span class="element-number mono">05</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Barril explosivo</span>
-                        <span class="element-card-hint mono">VER DETALHES +</span>
+                        <span class="element-card-title" data-en="Explosive barrel">Barril explosivo</span>
+                        <span class="element-card-hint mono" data-en="VIEW DETAILS +">VER DETALHES +</span>
 
                     </button>
 
@@ -276,18 +328,19 @@
 
                     <button class="element-card" type="button" data-system="menus"
                         data-title="Menu e telas do jogo"
-                        data-description="O jogo começa em um menu com uma cena animada própria e passa por loading, pausa, configurações gráficas e as telas de vitória e derrota, todas conectadas entre si.">
+                        data-description="O jogo começa em um menu com uma cena animada própria e passa por loading, pausa, configurações gráficas e as telas de vitória e derrota, todas conectadas entre si."
+                        data-en-attrs='{"data-title":"Menus and game screens","data-description":"The game starts on a menu with its own animated scene and moves through loading, pause, graphics settings and the victory and defeat screens, all connected."}'>
 
                         <span class="element-image">
-                            <img src="../assets/pirate/images/menu.png" alt="Menu principal do jogo"
+                            <img src="../assets/pirate/images/menu.png" alt="Menu principal do jogo" data-en-attrs='{"alt":"Game main menu"}'
                                 loading="lazy">
 
                             <span class="element-number mono">06</span>
                             <span class="element-play" aria-hidden="true">↗</span>
                         </span>
 
-                        <span class="element-card-title">Menu e telas do jogo</span>
-                        <span class="element-card-hint mono">VER DETALHES +</span>
+                        <span class="element-card-title" data-en="Menus and game screens">Menu e telas do jogo</span>
+                        <span class="element-card-hint mono" data-en="VIEW DETAILS +">VER DETALHES +</span>
 
                     </button>
 
@@ -299,7 +352,7 @@
 
                     <div class="element-detail-heading">
 
-                        <span class="section-label mono">
+                        <span class="section-label mono" data-en="ELEMENT DETAILS">
                             DETALHES DO ELEMENTO
                         </span>
 
@@ -331,13 +384,13 @@
             <section class="detail-section detail-tech">
 
                 <div>
-                    <p class="section-label mono">03 / DESENVOLVIMENTO</p>
-                    <h2>Sistemas e tecnologias.</h2>
+                    <p class="section-label mono" data-en="03 / DEVELOPMENT">03 / DESENVOLVIMENTO</p>
+                    <h2 data-en="Systems and technologies.">Sistemas e tecnologias.</h2>
                 </div>
 
                 <div class="detail-tech-content">
 
-                    <p>
+                    <p data-en="The project explores building mechanics and the communication between different gameplay elements, using visual scripting to structure the behaviors and rules of the match.">
                         O projeto explora a construção de mecânicas e a
                         comunicação entre diferentes elementos de gameplay,
                         utilizando programação visual para estruturar
@@ -347,10 +400,10 @@
                     <div class="tags">
                         <span class="tag">UNREAL ENGINE 5</span>
                         <span class="tag">BLUEPRINTS</span>
-                        <span class="tag">COMBATE</span>
-                        <span class="tag">ONDAS DE INIMIGOS</span>
-                        <span class="tag">INTERAÇÃO</span>
-                        <span class="tag">VITÓRIA E DERROTA</span>
+                        <span class="tag" data-en="COMBAT">COMBATE</span>
+                        <span class="tag" data-en="ENEMY WAVES">ONDAS DE INIMIGOS</span>
+                        <span class="tag" data-en="INTERACTION">INTERAÇÃO</span>
+                        <span class="tag" data-en="WIN AND LOSE">VITÓRIA E DERROTA</span>
                     </div>
 
                 </div>
@@ -361,14 +414,15 @@
 
             <div class="page-end">
 
-                <p class="mono">FIM DO PROJETO / 001</p>
+                <p class="mono" data-en="END OF PROJECT / 001">FIM DO PROJETO / 001</p>
 
-                <h2>
+                <h2 data-en-html="Shall we explore<br>other projects?">
                     Vamos explorar<br>
                     outros projetos?
                 </h2>
 
-                <a href="../index.html#projects" class="button-primary">
+                <a href="../index.html#projects" class="button-primary"
+                    data-en-html="Back to portfolio <span>↗</span>">
                     Voltar ao portfólio <span>↗</span>
                 </a>
 
@@ -384,12 +438,12 @@
 
             <div>
                 <p class="footer-name">MIGUEL CORAL<span>.</span></p>
-                <p class="footer-copy">
+                <p class="footer-copy" data-en="© 2026 · Game development portfolio">
                     © 2026 · Portfólio de desenvolvimento de jogos
                 </p>
             </div>
 
-            <a class="footer-top" href="#overview">
+            <a class="footer-top" href="#overview" data-en="Back to top ↑">
                 Voltar ao topo ↑
             </a>
 
@@ -397,7 +451,9 @@
 
     </footer>
 
+    <script src="../js/i18n.js" defer></script>
     <script src="../js/video-presentation.js" defer></script>
+    <script src="../js/slideshow.js" defer></script>
     <script src="pirate.js" defer></script>
 
 </body>

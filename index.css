@@ -306,16 +306,23 @@
     isolation: isolate;
 }
 
-.tile-image img {
+/* Imagem única do card (os slideshows usam o componente do global.css) */
+.tile-image > img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* No hover, o card se aproxima — a imagem única ou o slideshow inteiro */
+.tile-image > img,
+.tile-image .slideshow {
     transition: transform 0.5s ease;
 }
 
-.project-tile:hover .tile-image img {
+.project-tile:hover .tile-image > img,
+.project-tile:hover .tile-image .slideshow {
     transform: scale(1.045);
 }
 
@@ -442,6 +449,68 @@
     letter-spacing: -2px;
 }
 
+/* Coluna da esquerda acompanha a rolagem no desktop */
+.about-intro {
+    position: sticky;
+    top: 40px;
+    align-self: start;
+}
+
+/* FOTO */
+
+.about-photo {
+    position: relative;
+    max-width: 320px;
+    margin-top: 40px;
+}
+
+/* Cantos verdes em volta da foto */
+.about-photo::before,
+.about-photo::after {
+    content: "";
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    border: 0 solid var(--accent);
+    pointer-events: none;
+}
+
+.about-photo::before {
+    top: -10px;
+    left: -10px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+}
+
+/* Canto de baixo, na altura da foto (sem a legenda) */
+.about-photo::after {
+    right: -10px;
+    bottom: 20px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+}
+
+.about-photo img {
+    aspect-ratio: 3 / 4;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    filter: grayscale(0.85) contrast(1.05);
+    transition: filter 0.6s ease;
+}
+
+.about-photo:hover img {
+    filter: grayscale(0) contrast(1);
+}
+
+.about-photo figcaption {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 9px;
+}
+
+/* TEXTO */
+
 .about-copy p {
     max-width: 670px;
     color: var(--muted);
@@ -453,40 +522,149 @@
     margin-top: 17px;
 }
 
-.about-highlight {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-top: 30px;
-    padding: 20px;
-    border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.015);
+/* BLOCOS: TRAJETÓRIA E COMPETÊNCIAS */
+
+.about-block {
+    margin-top: 46px;
+    padding-top: 26px;
+    border-top: 1px solid var(--border);
 }
 
-.about-highlight-mark {
-    width: 46px;
-    height: 46px;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    border: 1px solid var(--accent);
+.about-copy .about-block-title {
+    margin-bottom: 22px;
     color: var(--accent);
-    font-weight: 700;
+    font-size: 10px;
 }
 
-.about-highlight div {
+/* Linha do tempo */
+
+.timeline {
+    list-style: none;
+}
+
+.timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
+    padding: 0 0 24px 22px;
+}
+
+/* Linha vertical */
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: -4px;
+    left: 3px;
+    width: 1px;
+    background: var(--border);
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-item:last-child::before {
+    display: none;
+}
+
+/* Ponto de cada marco */
+.timeline-item::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    background: var(--bg);
+}
+
+/* O marco mais recente fica preenchido */
+.timeline-item:first-child::after {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-strong);
+}
+
+.timeline-year {
+    padding-top: 1px;
+    color: var(--text-soft);
+    font-size: 11px;
+}
+
+.timeline-item div {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
 }
 
-.about-highlight strong {
-    font-size: 13px;
+.timeline-item strong {
+    font-size: 14px;
+    font-weight: 600;
 }
 
-.about-highlight div span {
+.timeline-item div span {
     color: var(--muted);
-    font-size: 11px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Grupos de competências */
+
+.skill-group {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.skill-group + .skill-group {
+    margin-top: 14px;
+}
+
+.skill-group-name {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.skill-group .tags {
+    margin-top: 0;
+}
+
+/* CONTATO */
+
+.about-contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 26px;
+    margin-top: 46px;
+}
+
+/* Botão com contorno, ao lado do principal (GitHub) */
+.button-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    padding: 13px 17px;
+    border: 1px solid var(--accent-strong);
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    transition: transform 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.button-outline:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    background: var(--accent-glow);
+}
+
+.button-outline:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 5px;
 }
 
 @media (max-width: 900px) {
@@ -501,13 +679,27 @@
         gap: 30px;
     }
 
+    .about-intro {
+        position: static;
+    }
+
     .about h2 {
         font-size: 39px;
     }
 
-    .about-highlight {
-        align-items: flex-start;
-        padding: 16px;
+    .about-photo {
+        max-width: 260px;
+        margin-top: 30px;
+    }
+
+    .timeline-item,
+    .skill-group {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .skill-group + .skill-group {
+        margin-top: 18px;
     }
 }
 
@@ -653,11 +845,13 @@
     background: #151813;
 }
 
+/* Ícone do app no topo da barra lateral */
 .lotus-sidebar-logo {
+    width: 34px;
+    height: 34px;
     margin-bottom: 5px;
-    color: var(--accent);
-    font-size: 23px;
-    font-weight: 700;
+    border: 1px solid var(--accent-muted);
+    border-radius: 7px;
 }
 
 .lotus-sidebar-line {

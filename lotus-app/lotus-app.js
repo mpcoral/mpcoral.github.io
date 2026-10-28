@@ -175,48 +175,245 @@ const requirementChapters = [
   items: rows.map(([id, text]) => ({ id, text }))
 }));
 
+// ==========================================
+// REQUISITOS EM INGLÊS
+// Mesma ordem dos capítulos e itens em português (os IDs não mudam).
+// ==========================================
+
+const requirementChaptersEn = [
+  ["1. Operators and authentication", [
+    "Operator registration: allow registering system operators.",
+    "Operator password: allow setting a password with at least four characters.",
+    "Activation and deactivation: allow controlling whether an operator is active.",
+    "Authentication when switching operators: require a password to switch the operator in use.",
+    "Operation tracking: record the operator responsible for relevant operations.",
+    "Operator history: keep the operator's identification in the relevant historical records.",
+    "Automatic operations: identify the system operator as (AUTO) in automatic cash register closings."
+  ]],
+  ["2. Product registration and management", [
+    "Product registration: allow registering products with a unique code and a required name.",
+    "Price validation: require a sale price greater than zero.",
+    "Cost registration: allow a unit cost equal to or greater than zero.",
+    "Minimum stock: allow setting each product's minimum stock.",
+    "Product by unit or box: allow registering products sold by unit or by box.",
+    "Unit cost per box: calculate the unit cost from the box cost and the number of units per box.",
+    "Business indicators: calculate unit profit, margin and markup from the product data.",
+    "Protecting management data: show cost, profit, margin and markup on the product card only to the manager profile.",
+    "Product deactivation: allow deactivating products without deleting their sales history."
+  ]],
+  ["3. Stock, batches, expiry and losses", [
+    "Batch registration: allow registering batches linked to products.",
+    "Required batch expiry: require an expiry date when registering a batch.",
+    "Stock control by batch: keep stock tied to its batches.",
+    "Batch selection on sale: require a batch to be identified to record the sale.",
+    "FEFO rule: prioritize the batch with the nearest expiry when selection is automatic.",
+    "Sale with insufficient stock: allow completing a sale even when available stock is insufficient.",
+    "Negative stock: allow the stock balance to go negative after a sale.",
+    "Low stock alert: visually flag products with stock below the minimum.",
+    "Expiry alert: flag expired products and those close to expiring.",
+    "Upcoming expiry filter: allow filtering batches close to expiring, using the system's 30-day window.",
+    "Loss registration: allow recording product losses with product, quantity and batch.",
+    "Loss reason: require the reason for the loss.",
+    "Batch loss validation: prevent recording a loss greater than the stock available in the selected batch."
+  ]],
+  ["4. Sales, cart and receipts", [
+    "Product search: allow finding products to add to the sale.",
+    "Adding items: allow adding products to the cart with visual feedback.",
+    "Quantity sold: allow setting the quantity of each item in the sale.",
+    "Percentage discount: allow applying a percentage discount to items.",
+    "Total calculation: calculate the sale total considering quantities and discounts.",
+    "Sale by box: allow recording sales of products registered as boxes.",
+    "Stock deduction: reduce the matching stock when the sale is completed.",
+    "Sale persistence: save the sale data to the database.",
+    "Receipt persistence: store the sale receipt as a record for later lookup.",
+    "Sales lookup: allow looking up sales in the history.",
+    "Receipt reprint or lookup: allow opening the stored receipt from the available records.",
+    "Cancellation from history: allow requesting a sale's cancellation from the history.",
+    "Cancellation record: keep the record of the canceled sale, including the action and the note entered.",
+    "Stock restoration: restore the stock tied to the items of a canceled sale."
+  ]],
+  ["5. Payments, amounts received and change", [
+    "Payment methods: allow payments by cash, PIX, debit, credit and store credit.",
+    "Split payment: allow combining different payment methods in one sale.",
+    "Amount per method: allow entering the amount for each payment method used.",
+    "Cash handed over: use the total cash handed over by the customer to calculate change.",
+    "Change calculation: calculate change when cash exceeds the amount it must cover, in a sale without store credit.",
+    "No excess without cash: prevent a payment excess from being treated as change when there is no cash in the payment.",
+    "Cash normalization: calculate the net cash amount after deducting change.",
+    "Consistent financial record: distinguish the gross amount received from the net amount kept in the register.",
+    "Net register entry: count in the register only the net amount of cash received.",
+    "Change record: keep the change amount available for lookup and auditing.",
+    "Change on the receipt: show the change on the receipt when applicable."
+  ]],
+  ["6. Store credit, receivables and deferred payments", [
+    "Credit sale: allow completing a sale with store credit, without immediate payment of that part.",
+    "Stock deduction on credit: reduce stock normally when a credit sale is completed.",
+    "Debt record: create a debt record linked to the credit sale.",
+    "Customer required: require the customer to be identified to record store credit.",
+    "Credit in split payment: allow combining store credit with other payment methods.",
+    "Automatic credit: calculate the store credit as the balance left after the other payment methods.",
+    "Credit not editable in split payment: don't require the operator to enter the calculated credit amount.",
+    "Single credit line: allow only one store credit line in a split payment.",
+    "No change with credit: don't calculate change when store credit is part of the payment.",
+    "No immediate register entry: don't count the store credit part as cash received at the time of sale.",
+    "Partial payment: allow receiving part of a debt without closing it.",
+    "Balance after partial payment: keep the debt open with the updated remaining balance.",
+    "Debt settlement: close the debt when the balance is fully paid.",
+    "Payment history: record later payments made on the debt.",
+    "Payment methods for debts: allow receiving store credit by cash, PIX, debit, credit or a compatible combination.",
+    "Cash payments: record in the register the net amount actually received in cash when settling store credit.",
+    "Credit cancellation: handle the linked debt record when the matching sale is canceled.",
+    "Separate pending items: keep store credit debts separate from card and installment receivables."
+  ]],
+  ["7. Customer registration and history", [
+    "Customer registration: allow registering customers manually.",
+    "Automatic customer creation: allow creating a customer record during a credit sale when needed.",
+    "Required name, optional phone: require the customer's name and allow the phone to be left blank.",
+    "Customer search: allow searching customers by name or phone.",
+    "Customer editing: allow updating the data of registered customers.",
+    "Customer deactivation: allow removing customers from regular searches without deleting their history.",
+    "Debtor filter: allow filtering customers with open credit debts.",
+    "Balance per customer: show each customer's open credit balance and highlight it when there is debt.",
+    "Credit purchase history: allow opening a customer's credit history, with open and paid purchases, original amount, amount paid and remaining balance."
+  ]],
+  ["8. Cash register control and closing", [
+    "Opening the register: allow opening the register with an initial balance.",
+    "Cash supply: allow recording additional cash added to the register.",
+    "Cash withdrawal: allow recording cash taken out of the register.",
+    "Cash sales integration: include cash sales in the register history.",
+    "Split payment integration: count only the net cash part of split-payment sales.",
+    "Excluding amounts not received: don't count store credit or change given back as register income.",
+    "Expected balance: calculate the expected register balance from the initial balance, supplies, withdrawals and net income.",
+    "Closing with a physical count: allow entering the physical count of available cash.",
+    "Closing difference: show the difference between the expected balance and the counted amount.",
+    "Closing history: keep the records of previous closings, including automatic ones.",
+    "Automatic closing: record the automatic closing of the register when the day changes.",
+    "Register movements: allow looking up recorded movements, with date and amounts."
+  ]],
+  ["9. Testers", [
+    "Tester quantity: allow setting the number of testers linked to a product.",
+    "Tester generation: generate the tester records for the defined quantity.",
+    "Tester status: allow controlling the ACTIVE, RAN OUT and MISSING statuses.",
+    "Event history: record the history of tester status changes.",
+    "Tester notes: allow recording notes about testers.",
+    "Operator identification: keep the operator's identification in the relevant tester events.",
+    "Automatic deactivation: deactivate the linked testers when the matching product is deactivated.",
+    "Protecting inactive testers: prevent status changes on inactive testers.",
+    "Problem testers lookup: show the total of testers marked RAN OUT or MISSING, counting only active records."
+  ]],
+  ["10. Reports and current status", [
+    "Period filters: allow daily, weekly, monthly, yearly and custom-period reports.",
+    "Operator filter: allow filtering reports by all operators or a specific one.",
+    "Automatic refresh: refresh the reports when the filters change.",
+    "Date navigation: allow moving between dates and periods with forward and back controls.",
+    "Custom period: allow entering start and end dates for the lookup.",
+    "Receivables card: show pending card and installment receivables, without mixing them with store credit.",
+    "Receivables by due date: allow looking up receivables grouped by due date.",
+    "Store credit card: show the total of open credit debts.",
+    "Store credit lookup: list open debts from oldest to newest and allow searching the records.",
+    "Payment from the report: allow opening a debt's payment flow from the report.",
+    "Receipt in a dialog: allow opening a sale's receipt from the records shown in the reports.",
+    "Expiry card: allow looking up the details of products and batches flagged for expiry.",
+    "Minimum stock card: allow looking up products below the minimum stock.",
+    "Testers card: allow opening the details of problem testers.",
+    "Sales by payment method: show the breakdown of sales by payment method, with store credit as a separate category.",
+    "Amounts actually received: keep cash reports consistent with the net amounts actually received, without treating store credit or change as cash income."
+  ]],
+  ["11. Indicators and profit analysis", [
+    "Unit profit on registration: automatically calculate unit profit when registering and editing products.",
+    "Manager-only indicators: restrict the display of cost, profit, margin and markup on product cards to the manager profile.",
+    "Profit card: show a profit card in the current status area of the reports.",
+    "Profit filter: calculate the profit report indicators for the selected period and operator.",
+    "Profit vs. cash: don't treat profit as cash entering the register.",
+    "Profit on credit sales: count a credit sale on the date the sale happens.",
+    "Later payment: don't count the sale's profit again when a credit debt is paid.",
+    "Cancellation and profit: exclude canceled sales from the profit calculation.",
+    "Discounts in the calculation: account for the discounts given when calculating item results.",
+    "Profit report indicators: show profit, amount sold, cost, margin and loss indicators.",
+    "View by sale: allow looking up the financial result grouped by sale.",
+    "View by item: allow looking up the result per item sold.",
+    "Product ranking: show a ranking of products by profit.",
+    "Result filters: allow filtering results by all, profit or loss.",
+    "Highlighting results: visually distinguish positive, negative and neutral results.",
+    "Receipt from the profit report: allow opening the sale's stored receipt from the profit report.",
+    "Loss indicator: show the number of sales at a loss and the biggest loss in the period."
+  ]],
+  ["12. Charts", [
+    "Charts panel: provide a dedicated screen for viewing the system's indicators as charts.",
+    "Sales indicators: allow viewing metrics such as total sales, revenue, items sold and cancellations.",
+    "Time grouping: show the data grouped by day, week, month or year, depending on the selected mode.",
+    "Period navigation: allow moving between time windows in the charts.",
+    "Chart refresh: update the view when the period or lookup mode changes."
+  ]],
+  ["13. Export, printing and backup", [
+    "Excel export: allow exporting the data provided by the system to an Excel file.",
+    "Receipt printing: allow printing the sale receipt.",
+    "Manual backup: allow creating a copy of the database in a location chosen by the user.",
+    "Backup naming: allow saving the copy with a name different from the database in use.",
+    "Receipt preservation: allow looking up or reprinting the stored receipt without rebuilding it from the current product data."
+  ]]
+];
+
+const requirementLabels = {
+  pt: { count: (n) => `${n} requisitos` },
+  en: { count: (n) => `${n} requirements` }
+};
+
 const requirementsContainer = document.getElementById("requirements-list");
 
-requirementChapters.forEach((chapter, index) => {
-  const details = document.createElement("details");
-  details.className = "group";
+// Monta os capítulos no idioma atual, mantendo os que estavam abertos.
+function renderRequirements(lang) {
+  const openChapters = [...requirementsContainer.querySelectorAll(".group")]
+    .map((group) => group.open);
 
-  const summary = document.createElement("summary");
-  summary.innerHTML = `
+  requirementsContainer.replaceChildren();
+
+  requirementChapters.forEach((chapter, index) => {
+    const english = lang === "en" ? requirementChaptersEn[index] : null;
+
+    const details = document.createElement("details");
+    details.className = "group";
+    details.open = Boolean(openChapters[index]);
+
+    const summary = document.createElement("summary");
+    summary.innerHTML = `
 <span class="group-number">${String(index + 1).padStart(2, "0")}</span>
 <span class="group-title"></span>
-<span class="count">${chapter.items.length} requisitos</span>
+<span class="count"></span>
 <span class="chevron" aria-hidden="true">+</span>
-  `;
+    `;
 
-  summary.querySelector(".group-title").textContent = chapter.title;
+    summary.querySelector(".group-title").textContent = english ? english[0] : chapter.title;
+    summary.querySelector(".count").textContent =
+      (requirementLabels[lang] || requirementLabels.pt).count(chapter.items.length);
 
-  const panel = document.createElement("div");
-  panel.className = "group-panel";
+    const panel = document.createElement("div");
+    panel.className = "group-panel";
 
-  const list = document.createElement("ol");
-  list.className = "req-list";
+    const list = document.createElement("ol");
+    list.className = "req-list";
 
-  chapter.items.forEach(item => {
-    const li = document.createElement("li");
-    li.className = "req-item";
+    chapter.items.forEach((item, itemIndex) => {
+      const li = document.createElement("li");
+      li.className = "req-item";
 
-    const id = document.createElement("span");
-    id.className = "req-id";
-    id.textContent = item.id;
+      const id = document.createElement("span");
+      id.className = "req-id";
+      id.textContent = item.id;
 
-    const text = document.createElement("span");
-    text.className = "req-text";
-    text.textContent = item.text;
+      const text = document.createElement("span");
+      text.className = "req-text";
+      text.textContent = english ? english[1][itemIndex] : item.text;
 
-    li.append(id, text);
-    list.appendChild(li);
+      li.append(id, text);
+      list.appendChild(li);
+    });
+
+    panel.appendChild(list);
+    details.append(summary, panel);
+    requirementsContainer.appendChild(details);
   });
-
-  panel.appendChild(list);
-  details.append(summary, panel);
-  requirementsContainer.appendChild(details);
-});
+}
 
 document.getElementById("open-all").addEventListener("click", () => {
   document.querySelectorAll(".group").forEach(group => {
@@ -228,4 +425,107 @@ document.getElementById("close-all").addEventListener("click", () => {
   document.querySelectorAll(".group").forEach(group => {
     group.open = false;
   });
+});
+
+// ==========================================
+// TOUR DAS TELAS DO APP
+// O bonequinho e a troca das telas ficam em js/screen-tour.js.
+// Telas com vários prints ganham vidros no card: cada vidro
+// quebrado pelo bonequinho troca para o próximo print.
+// ==========================================
+
+const SCREENS_PATH = "../assets/lotus/images/";
+
+const tourScreens = [
+  {
+    name: { pt: "Produtos", en: "Products" },
+    description: { pt: "Cadastro, lotes e indicadores", en: "Registration, batches and indicators" },
+    images: [SCREENS_PATH + "products.png"],
+    points: [
+      { pt: "Lucro, margem e markup calculados no cadastro, visíveis só para o perfil gerente.", en: "Profit, margin and markup calculated on registration, visible only to the manager profile." },
+      { pt: "Produtos por unidade ou por caixa, com o custo unitário calculado sozinho.", en: "Products by unit or by box, with the unit cost calculated automatically." },
+      { pt: "Registro de perdas por lote, com motivo obrigatório.", en: "Loss records by batch, with a required reason." }
+    ]
+  },
+  {
+    name: { pt: "Histórico de vendas", en: "Sales history" },
+    description: { pt: "Cupons e cancelamentos", en: "Receipts and cancellations" },
+    images: [SCREENS_PATH + "sales-history.png"],
+    points: [
+      { pt: "Cada venda guarda o cupom como foi impresso, sem recalcular com preços novos.", en: "Each sale keeps the receipt as it was printed, without recalculating with new prices." },
+      { pt: "Cancelar uma venda devolve os itens ao lote de origem.", en: "Canceling a sale returns the items to their original batch." },
+      { pt: "O cancelamento fica registrado com a observação informada.", en: "The cancellation is recorded along with the note entered." }
+    ]
+  },
+  {
+    name: { pt: "Caixa", en: "Cash register" },
+    description: { pt: "Abertura, sangria e fechamento", en: "Opening, withdrawals and closing" },
+    images: [SCREENS_PATH + "cash-register-1.png", SCREENS_PATH + "cash-register-2.png"],
+    points: [
+      { pt: "O saldo esperado considera só o dinheiro que entrou, sem fiado e sem troco.", en: "The expected balance only counts the cash that came in, without store credit or change." },
+      { pt: "Fechamento com contagem física e a diferença calculada na hora.", en: "Closing with a physical count and the difference calculated on the spot." },
+      { pt: "Fecha sozinho na virada do dia, registrado como (AUTO).", en: "Closes on its own when the day changes, recorded as (AUTO)." }
+    ]
+  },
+  {
+    name: { pt: "Relatórios", en: "Reports" },
+    description: { pt: "Fechamentos e situação atual", en: "Closings and current status" },
+    images: [
+      SCREENS_PATH + "reports-1.png",
+      SCREENS_PATH + "reports-2.png",
+      SCREENS_PATH + "reports-3.png"
+    ],
+    points: [
+      { pt: "Filtros por dia, semana, mês, ano ou período, e por operador.", en: "Filters by day, week, month, year or period, and by operator." },
+      { pt: "Recebíveis, fiado, lucro, estoque mínimo, validade e testers em cards.", en: "Receivables, store credit, profit, minimum stock, expiry and testers in cards." },
+      { pt: "Exportação para Excel e backup do banco com um clique.", en: "Excel export and database backup with one click." }
+    ]
+  },
+  {
+    name: { pt: "Gráficos", en: "Charts" },
+    description: { pt: "Evolução das vendas", en: "Sales over time" },
+    images: [SCREENS_PATH + "charts-1.png", SCREENS_PATH + "charts-2.png"],
+    points: [
+      { pt: "Total de vendas, faturamento, cancelamentos e itens mais vendidos.", en: "Total sales, revenue, cancellations and best-selling items." },
+      { pt: "Agrupamento diário, semanal, mensal ou anual.", en: "Daily, weekly, monthly or yearly grouping." },
+      { pt: "Navegação entre períodos pelas setas do gráfico.", en: "Navigation between periods with the chart arrows." }
+    ]
+  }
+];
+
+// Textos do tour e da apresentação de vídeo em cada idioma.
+const interfaceLabels = {
+  pt: {
+    tour: { zoom: "Ampliar imagem", enlarged: "Imagem ampliada", close: "Fechar", screen: "Tela de", part: "parte" },
+    presentation: { moreLabel: "Ver mais", lessLabel: "Ver menos", highlightsLabel: "DESTAQUES DO VÍDEO", closeLabel: "Fechar apresentação" }
+  },
+  en: {
+    tour: { zoom: "Enlarge image", enlarged: "Enlarged image", close: "Close", screen: "Screen:", part: "part" },
+    presentation: { moreLabel: "See more", lessLabel: "See less", highlightsLabel: "VIDEO HIGHLIGHTS", closeLabel: "Close presentation" }
+  }
+};
+
+// As telas com os textos do idioma atual.
+function screensIn() {
+  return tourScreens.map((screen) => ({
+    name: I18n.pick(screen.name),
+    description: I18n.pick(screen.description),
+    images: screen.images,
+    points: screen.points.map((point) => I18n.pick(point))
+  }));
+}
+
+const tour = ScreenTour.create(document.getElementById("screen-tour"), screensIn(), {
+  labels: interfaceLabels[I18n.lang].tour
+});
+
+// ==========================================
+// TROCA DE IDIOMA
+// O i18n.js traduz o HTML; aqui ficam os textos criados pelo JavaScript.
+// ==========================================
+
+I18n.onChange((lang) => {
+  renderRequirements(lang);
+  tour.update(screensIn(), interfaceLabels[lang].tour);
+  VideoPresentation.setDefaults(interfaceLabels[lang].presentation);
 });
