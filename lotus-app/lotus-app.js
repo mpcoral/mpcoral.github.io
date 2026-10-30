@@ -1,5 +1,5 @@
 const requirementChapters = [
-  ["1. Operadores e autenticação", [
+  ["Operadores e autenticação", [
     ["RF001", "Cadastro de operadores: permitir cadastrar operadores do sistema."],
     ["RF002", "Senha de operador: permitir definir senha com, no mínimo, quatro caracteres."],
     ["RF003", "Ativação e inativação: permitir controlar se um operador está ativo."],
@@ -8,7 +8,7 @@ const requirementChapters = [
     ["RF006", "Histórico do operador: preservar a identificação do operador nos registros históricos pertinentes."],
     ["RF007", "Identificação de operações automáticas: identificar o operador sistêmico como (AUTO) nos fechamentos automáticos de caixa."]
   ]],
-  ["2. Cadastro e gerenciamento de produtos", [
+  ["Cadastro e gerenciamento de produtos", [
     ["RF008", "Cadastro de produtos: permitir cadastrar produtos com código único e nome obrigatório."],
     ["RF009", "Validação de preço: exigir preço de venda superior a zero."],
     ["RF010", "Cadastro de custo: permitir cadastrar custo unitário igual ou superior a zero."],
@@ -19,7 +19,7 @@ const requirementChapters = [
     ["RF015", "Proteção de informações gerenciais: exibir custo, lucro, margem e markup no card do produto somente para o perfil gerente."],
     ["RF016", "Inativação de produtos: permitir desativar produtos sem eliminar seu histórico de vendas."]
   ]],
-  ["3. Estoque, lotes, validade e perdas", [
+  ["Estoque, lotes, validade e perdas", [
     ["RF017", "Cadastro de lotes: permitir cadastrar lotes vinculados aos produtos."],
     ["RF018", "Validade obrigatória do lote: exigir informação de validade no cadastro do lote."],
     ["RF019", "Controle de estoque por lote: manter o estoque associado aos respectivos lotes."],
@@ -34,7 +34,7 @@ const requirementChapters = [
     ["RF028", "Motivo da perda: exigir o motivo do registro de perda."],
     ["RF029", "Validação da perda por lote: impedir o registro de perda superior ao estoque disponível no lote selecionado."]
   ]],
-  ["4. Vendas, carrinho e cupons", [
+  ["Vendas, carrinho e cupons", [
     ["RF030", "Busca de produtos: permitir localizar produtos para adicionar à venda."],
     ["RF031", "Inclusão de itens: permitir adicionar produtos ao carrinho e apresentar feedback visual da inclusão."],
     ["RF032", "Quantidade vendida: permitir definir a quantidade de cada item da venda."],
@@ -50,12 +50,12 @@ const requirementChapters = [
     ["RF042", "Registro do cancelamento: preservar o registro da venda cancelada, incluindo a ação e a observação informada."],
     ["RF043", "Restauração do estoque: restaurar o estoque associado aos itens de uma venda cancelada."]
   ]],
-  ["5. Pagamentos, valores recebidos e troco", [
-    ["RF044", "Formas de pagamento: permitir pagamentos em dinheiro, PIX, débito, crédito e FIADO/A prazo."],
+  ["Pagamentos, valores recebidos e troco", [
+    ["RF044", "Formas de pagamento: permitir pagamentos em dinheiro, PIX, débito, crédito e a prazo."],
     ["RF045", "Pagamento misto: permitir combinar diferentes formas de pagamento em uma venda."],
     ["RF046", "Valores por forma de pagamento: permitir informar os valores destinados às formas de pagamento utilizadas."],
     ["RF047", "Valor entregue em dinheiro: considerar o valor total entregue pelo cliente para calcular o troco."],
-    ["RF048", "Cálculo de troco: calcular o troco quando o pagamento em dinheiro exceder o valor que deve ser coberto por dinheiro, em uma venda sem FIADO."],
+    ["RF048", "Cálculo de troco: calcular o troco quando o pagamento em dinheiro exceder o valor que deve ser coberto por dinheiro, em uma venda sem parcela a prazo."],
     ["RF049", "Bloqueio de excesso sem dinheiro: impedir que um excedente de pagamento seja tratado como troco quando não houver dinheiro na composição do pagamento."],
     ["RF050", "Normalização do dinheiro: calcular o valor líquido em dinheiro após descontar o troco."],
     ["RF051", "Registro financeiro consistente: distinguir o valor bruto recebido do valor líquido retido pelo caixa."],
@@ -63,27 +63,27 @@ const requirementChapters = [
     ["RF053", "Registro do troco: manter o valor do troco disponível para consulta e auditoria."],
     ["RF054", "Exibição de troco no cupom: apresentar o troco no cupom quando aplicável."]
   ]],
-  ["6. FIADO, recebíveis e pagamentos a prazo", [
-    ["RF055", "Venda a prazo: permitir concluir uma venda com pagamento FIADO/A prazo, sem recebimento imediato dessa parcela."],
-    ["RF056", "Baixa de estoque no FIADO: reduzir o estoque normalmente quando a venda a prazo é concluída."],
+  ["Vendas a prazo e recebíveis", [
+    ["RF055", "Venda a prazo: permitir concluir uma venda com pagamento a prazo, sem recebimento imediato dessa parcela."],
+    ["RF056", "Baixa de estoque na venda a prazo: reduzir o estoque normalmente quando a venda é concluída."],
     ["RF057", "Registro da dívida: criar um registro de dívida vinculado à venda a prazo."],
-    ["RF058", "Cliente obrigatório: exigir a identificação do cliente para registrar FIADO."],
-    ["RF059", "FIADO em pagamento misto: permitir combinar FIADO com outras formas de pagamento."],
-    ["RF060", "FIADO automático: calcular automaticamente o FIADO como o saldo restante após considerar as outras formas de pagamento."],
-    ["RF061", "FIADO não editável no misto: não exigir que o operador informe manualmente o valor calculado do FIADO."],
-    ["RF062", "Parcela única de FIADO: permitir apenas uma linha de FIADO na composição de pagamento misto."],
-    ["RF063", "Sem troco com FIADO: não calcular troco quando houver FIADO na composição do pagamento."],
-    ["RF064", "Sem entrada imediata no caixa: não contabilizar a parcela FIADO como dinheiro recebido no momento da venda."],
+    ["RF058", "Cliente obrigatório: exigir a identificação do cliente para registrar uma venda a prazo."],
+    ["RF059", "Pagamento a prazo no misto: permitir combinar o pagamento a prazo com outras formas de pagamento."],
+    ["RF060", "Valor a prazo automático: calcular automaticamente o valor a prazo como o saldo restante após considerar as outras formas de pagamento."],
+    ["RF061", "Valor a prazo não editável no misto: não exigir que o operador informe manualmente o valor a prazo calculado."],
+    ["RF062", "Parcela única a prazo: permitir apenas uma linha a prazo na composição de pagamento misto."],
+    ["RF063", "Sem troco na venda a prazo: não calcular troco quando houver valor a prazo na composição do pagamento."],
+    ["RF064", "Sem entrada imediata no caixa: não contabilizar a parcela a prazo como dinheiro recebido no momento da venda."],
     ["RF065", "Recebimento parcial: permitir receber parte de uma dívida sem encerrá-la."],
     ["RF066", "Saldo após recebimento parcial: manter a dívida em aberto com o saldo restante atualizado."],
     ["RF067", "Quitação da dívida: encerrar a dívida quando o saldo for totalmente pago."],
     ["RF068", "Histórico de recebimentos: registrar os recebimentos posteriores da dívida."],
-    ["RF069", "Métodos de recebimento: permitir receber FIADO por dinheiro, PIX, débito, crédito ou composição de métodos compatível com o fluxo de recebimento."],
-    ["RF070", "Recebimento em dinheiro: registrar no caixa o valor líquido efetivamente recebido em dinheiro durante a quitação de FIADO."],
-    ["RF071", "Cancelamento de FIADO: tratar o registro de dívida vinculado quando a venda correspondente é cancelada."],
-    ["RF072", "Separação de pendências: manter as dívidas FIADO separadas dos recebíveis de cartão/crédito parcelado."]
+    ["RF069", "Métodos de recebimento: permitir receber valores a prazo por dinheiro, PIX, débito, crédito ou composição de métodos compatível com o fluxo de recebimento."],
+    ["RF070", "Recebimento em dinheiro: registrar no caixa o valor líquido efetivamente recebido em dinheiro durante a quitação de dívidas a prazo."],
+    ["RF071", "Cancelamento de venda a prazo: tratar o registro de dívida vinculado quando a venda correspondente é cancelada."],
+    ["RF072", "Separação de pendências: manter as dívidas a prazo separadas dos recebíveis de cartão/crédito parcelado."]
   ]],
-  ["7. Cadastro e histórico de clientes", [
+  ["Cadastro e histórico de clientes", [
     ["RF073", "Cadastro de clientes: permitir cadastrar clientes manualmente."],
     ["RF074", "Criação automática de cliente: permitir criar um cadastro de cliente durante uma venda a prazo quando necessário."],
     ["RF075", "Nome obrigatório e telefone opcional: exigir nome do cliente e permitir que o telefone fique em branco."],
@@ -91,16 +91,16 @@ const requirementChapters = [
     ["RF077", "Edição de clientes: permitir atualizar dados de clientes cadastrados."],
     ["RF078", "Inativação de clientes: permitir remover clientes das buscas normais sem apagar o histórico relacionado."],
     ["RF079", "Filtro de devedores: permitir filtrar clientes que possuem dívidas a prazo em aberto."],
-    ["RF080", "Saldo por cliente: exibir o saldo de FIADO em aberto de cada cliente e destacá-lo visualmente quando houver dívida."],
-    ["RF081", "Histórico de compras a prazo: permitir abrir o histórico de FIADO do cliente, com compras abertas e pagas, valor original, valor pago e saldo pendente."]
+    ["RF080", "Saldo por cliente: exibir o saldo a prazo em aberto de cada cliente e destacá-lo visualmente quando houver dívida."],
+    ["RF081", "Histórico de compras a prazo: permitir abrir o histórico do cliente, com compras abertas e pagas, valor original, valor pago e saldo pendente."]
   ]],
-  ["8. Controle e fechamento de caixa", [
+  ["Controle e fechamento de caixa", [
     ["RF082", "Abertura de caixa: permitir abrir o caixa informando o saldo inicial."],
     ["RF083", "Suprimento: permitir registrar entradas adicionais de dinheiro no caixa."],
     ["RF084", "Sangria: permitir registrar retiradas de dinheiro do caixa."],
     ["RF085", "Integração de vendas em dinheiro: integrar as vendas pagas em dinheiro ao histórico do caixa."],
     ["RF086", "Integração de pagamentos mistos: considerar somente a parcela líquida de dinheiro das vendas com pagamento misto."],
-    ["RF087", "Exclusão de valores não recebidos: não contabilizar FIADO nem troco devolvido como receita de caixa."],
+    ["RF087", "Exclusão de valores não recebidos: não contabilizar valores a prazo nem troco devolvido como receita de caixa."],
     ["RF088", "Saldo esperado: calcular o saldo esperado do caixa a partir do saldo inicial, suprimentos, sangrias e entradas líquidas."],
     ["RF089", "Fechamento com contagem física: permitir informar a contagem física do dinheiro disponível."],
     ["RF090", "Diferença de fechamento: apresentar a diferença entre o saldo esperado e o valor contado."],
@@ -108,7 +108,7 @@ const requirementChapters = [
     ["RF092", "Fechamento automático: registrar o fechamento automático do caixa quando ocorre a virada do dia."],
     ["RF093", "Movimentações do caixa: permitir consultar os movimentos registrados, com informações de data e valores."]
   ]],
-  ["9. Testers", [
+  ["Testers", [
     ["RF094", "Quantidade de testers: permitir definir a quantidade de testers vinculados a um produto."],
     ["RF095", "Geração de testers: gerar os registros de testers correspondentes à quantidade definida."],
     ["RF096", "Status de tester: permitir controlar os status ATIVO, ACABOU e SUMIU."],
@@ -119,25 +119,25 @@ const requirementChapters = [
     ["RF101", "Proteção de testers inativos: impedir alterações de status em testers inativos."],
     ["RF102", "Consulta de testers com problemas: apresentar a quantidade consolidada de testers com status ACABOU ou SUMIU, considerando somente registros ativos."]
   ]],
-  ["10. Relatórios e situação atual", [
+  ["Relatórios e situação atual", [
     ["RF103", "Filtros por período: permitir consultar relatórios diários, semanais, mensais, anuais e por período personalizado."],
     ["RF104", "Filtro por operador: permitir filtrar relatórios por todos os operadores ou por um operador específico."],
     ["RF105", "Atualização automática: atualizar os relatórios quando os filtros forem alterados."],
     ["RF106", "Navegação de datas: permitir navegar entre datas e períodos usando controles de avanço e retorno."],
     ["RF107", "Período personalizado: permitir informar datas de início e fim para consulta."],
-    ["RF108", "Card de recebíveis: apresentar os recebíveis pendentes de cartão/crédito parcelado, sem misturá-los com FIADO."],
+    ["RF108", "Card de recebíveis: apresentar os recebíveis pendentes de cartão/crédito parcelado, sem misturá-los com as vendas a prazo."],
     ["RF109", "Recebíveis por vencimento: permitir consultar recebíveis agrupados por data de vencimento."],
-    ["RF110", "Card de FIADO: apresentar o total das dívidas a prazo em aberto."],
-    ["RF111", "Consulta de FIADO: listar as dívidas em aberto da mais antiga para a mais recente e permitir pesquisar os registros."],
+    ["RF110", "Card de vendas a prazo: apresentar o total das dívidas a prazo em aberto."],
+    ["RF111", "Consulta de dívidas a prazo: listar as dívidas em aberto da mais antiga para a mais recente e permitir pesquisar os registros."],
     ["RF112", "Recebimento pelo relatório: permitir acessar o fluxo de recebimento de uma dívida a partir do relatório."],
     ["RF113", "Consulta de cupom em modal: permitir abrir o cupom de uma venda a partir dos registros apresentados nos relatórios."],
     ["RF114", "Card de validade: permitir consultar os detalhes dos produtos e lotes sinalizados por validade."],
     ["RF115", "Card de estoque mínimo: permitir consultar os produtos abaixo do estoque mínimo."],
     ["RF116", "Card de testers: permitir abrir os detalhes dos testers com problemas."],
-    ["RF117", "Resumo de vendas por pagamento: apresentar a distribuição das vendas por forma de pagamento, incluindo FIADO como categoria separada."],
-    ["RF118", "Valores efetivamente recebidos: manter os relatórios financeiros de caixa coerentes com os valores líquidos efetivamente recebidos, sem tratar FIADO ou troco como entrada de dinheiro."]
+    ["RF117", "Resumo de vendas por pagamento: apresentar a distribuição das vendas por forma de pagamento, incluindo a prazo como categoria separada."],
+    ["RF118", "Valores efetivamente recebidos: manter os relatórios financeiros de caixa coerentes com os valores líquidos efetivamente recebidos, sem tratar valores a prazo ou troco como entrada de dinheiro."]
   ]],
-  ["11. Indicadores e análise de lucro", [
+  ["Indicadores e análise de lucro", [
     ["RF119", "Lucro unitário no cadastro: calcular automaticamente o lucro unitário no cadastro e na edição de produtos."],
     ["RF120", "Indicadores restritos ao gerente: restringir a visualização de custo, lucro, margem e markup nos cards de produtos ao perfil gerente."],
     ["RF121", "Card de lucro: apresentar um card de lucro na área de situação atual dos relatórios."],
@@ -156,14 +156,14 @@ const requirementChapters = [
     ["RF134", "Consulta do cupom pelo lucro: permitir abrir o cupom persistido da venda a partir do relatório de lucro."],
     ["RF135", "Indicador de prejuízo: apresentar a quantidade de vendas com prejuízo e o maior prejuízo do período."]
   ]],
-  ["12. Gráficos", [
+  ["Gráficos", [
     ["RF136", "Painel de gráficos: disponibilizar uma tela específica para consulta gráfica dos indicadores do sistema."],
     ["RF137", "Indicadores de vendas: permitir visualizar métricas como total de vendas, faturamento, itens vendidos e cancelamentos."],
     ["RF138", "Agrupamento temporal: apresentar os dados em agregações diárias, semanais, mensais ou anuais, conforme o modo selecionado."],
     ["RF139", "Navegação por período: permitir navegar entre janelas temporais dos gráficos."],
     ["RF140", "Atualização dos gráficos: atualizar a visualização quando o período ou modo de consulta for alterado."]
   ]],
-  ["13. Exportação, impressão e backup", [
+  ["Exportação, impressão e backup", [
     ["RF141", "Exportação para Excel: permitir exportar os dados disponibilizados pelo sistema para arquivo Excel."],
     ["RF142", "Impressão de cupom: permitir imprimir o cupom da venda."],
     ["RF143", "Backup manual: permitir criar uma cópia do banco de dados em local escolhido pelo usuário."],
@@ -181,7 +181,7 @@ const requirementChapters = [
 // ==========================================
 
 const requirementChaptersEn = [
-  ["1. Operators and authentication", [
+  ["Operators and authentication", [
     "Operator registration: allow registering system operators.",
     "Operator password: allow setting a password with at least four characters.",
     "Activation and deactivation: allow controlling whether an operator is active.",
@@ -190,7 +190,7 @@ const requirementChaptersEn = [
     "Operator history: keep the operator's identification in the relevant historical records.",
     "Automatic operations: identify the system operator as (AUTO) in automatic cash register closings."
   ]],
-  ["2. Product registration and management", [
+  ["Product registration and management", [
     "Product registration: allow registering products with a unique code and a required name.",
     "Price validation: require a sale price greater than zero.",
     "Cost registration: allow a unit cost equal to or greater than zero.",
@@ -201,7 +201,7 @@ const requirementChaptersEn = [
     "Protecting management data: show cost, profit, margin and markup on the product card only to the manager profile.",
     "Product deactivation: allow deactivating products without deleting their sales history."
   ]],
-  ["3. Stock, batches, expiry and losses", [
+  ["Stock, batches, expiry and losses", [
     "Batch registration: allow registering batches linked to products.",
     "Required batch expiry: require an expiry date when registering a batch.",
     "Stock control by batch: keep stock tied to its batches.",
@@ -216,7 +216,7 @@ const requirementChaptersEn = [
     "Loss reason: require the reason for the loss.",
     "Batch loss validation: prevent recording a loss greater than the stock available in the selected batch."
   ]],
-  ["4. Sales, cart and receipts", [
+  ["Sales, cart and receipts", [
     "Product search: allow finding products to add to the sale.",
     "Adding items: allow adding products to the cart with visual feedback.",
     "Quantity sold: allow setting the quantity of each item in the sale.",
@@ -232,12 +232,12 @@ const requirementChaptersEn = [
     "Cancellation record: keep the record of the canceled sale, including the action and the note entered.",
     "Stock restoration: restore the stock tied to the items of a canceled sale."
   ]],
-  ["5. Payments, amounts received and change", [
-    "Payment methods: allow payments by cash, PIX, debit, credit and store credit.",
+  ["Payments, amounts received and change", [
+    "Payment methods: allow payments by cash, PIX, debit, credit card and deferred payment.",
     "Split payment: allow combining different payment methods in one sale.",
     "Amount per method: allow entering the amount for each payment method used.",
     "Cash handed over: use the total cash handed over by the customer to calculate change.",
-    "Change calculation: calculate change when cash exceeds the amount it must cover, in a sale without store credit.",
+    "Change calculation: calculate change when cash exceeds the amount it must cover, in a sale with no deferred amount.",
     "No excess without cash: prevent a payment excess from being treated as change when there is no cash in the payment.",
     "Cash normalization: calculate the net cash amount after deducting change.",
     "Consistent financial record: distinguish the gross amount received from the net amount kept in the register.",
@@ -245,44 +245,44 @@ const requirementChaptersEn = [
     "Change record: keep the change amount available for lookup and auditing.",
     "Change on the receipt: show the change on the receipt when applicable."
   ]],
-  ["6. Store credit, receivables and deferred payments", [
-    "Credit sale: allow completing a sale with store credit, without immediate payment of that part.",
-    "Stock deduction on credit: reduce stock normally when a credit sale is completed.",
-    "Debt record: create a debt record linked to the credit sale.",
-    "Customer required: require the customer to be identified to record store credit.",
-    "Credit in split payment: allow combining store credit with other payment methods.",
-    "Automatic credit: calculate the store credit as the balance left after the other payment methods.",
-    "Credit not editable in split payment: don't require the operator to enter the calculated credit amount.",
-    "Single credit line: allow only one store credit line in a split payment.",
-    "No change with credit: don't calculate change when store credit is part of the payment.",
-    "No immediate register entry: don't count the store credit part as cash received at the time of sale.",
+  ["Deferred sales and receivables", [
+    "Deferred sale: allow completing a sale with deferred payment, without immediate payment of that part.",
+    "Stock deduction on deferred sales: reduce stock normally when the sale is completed.",
+    "Debt record: create a debt record linked to the deferred sale.",
+    "Customer required: require the customer to be identified to record a deferred sale.",
+    "Deferred payment in split payments: allow combining deferred payment with other payment methods.",
+    "Automatic deferred amount: calculate the deferred amount as the balance left after the other payment methods.",
+    "Deferred amount not editable in split payments: don't require the operator to enter the calculated deferred amount.",
+    "Single deferred line: allow only one deferred line in a split payment.",
+    "No change on deferred sales: don't calculate change when a deferred amount is part of the payment.",
+    "No immediate register entry: don't count the deferred part as cash received at the time of sale.",
     "Partial payment: allow receiving part of a debt without closing it.",
     "Balance after partial payment: keep the debt open with the updated remaining balance.",
     "Debt settlement: close the debt when the balance is fully paid.",
     "Payment history: record later payments made on the debt.",
-    "Payment methods for debts: allow receiving store credit by cash, PIX, debit, credit or a compatible combination.",
-    "Cash payments: record in the register the net amount actually received in cash when settling store credit.",
-    "Credit cancellation: handle the linked debt record when the matching sale is canceled.",
-    "Separate pending items: keep store credit debts separate from card and installment receivables."
+    "Payment methods for debts: allow receiving deferred amounts by cash, PIX, debit, credit card or a compatible combination.",
+    "Cash payments: record in the register the net amount actually received in cash when settling deferred debts.",
+    "Deferred sale cancellation: handle the linked debt record when the matching sale is canceled.",
+    "Separate pending items: keep deferred debts separate from card and installment receivables."
   ]],
-  ["7. Customer registration and history", [
+  ["Customer registration and history", [
     "Customer registration: allow registering customers manually.",
-    "Automatic customer creation: allow creating a customer record during a credit sale when needed.",
+    "Automatic customer creation: allow creating a customer record during a deferred sale when needed.",
     "Required name, optional phone: require the customer's name and allow the phone to be left blank.",
     "Customer search: allow searching customers by name or phone.",
     "Customer editing: allow updating the data of registered customers.",
     "Customer deactivation: allow removing customers from regular searches without deleting their history.",
-    "Debtor filter: allow filtering customers with open credit debts.",
-    "Balance per customer: show each customer's open credit balance and highlight it when there is debt.",
-    "Credit purchase history: allow opening a customer's credit history, with open and paid purchases, original amount, amount paid and remaining balance."
+    "Debtor filter: allow filtering customers with open deferred debts.",
+    "Balance per customer: show each customer's open deferred balance and highlight it when there is debt.",
+    "Deferred purchase history: allow opening a customer's history, with open and paid purchases, original amount, amount paid and remaining balance."
   ]],
-  ["8. Cash register control and closing", [
+  ["Cash register control and closing", [
     "Opening the register: allow opening the register with an initial balance.",
     "Cash supply: allow recording additional cash added to the register.",
     "Cash withdrawal: allow recording cash taken out of the register.",
     "Cash sales integration: include cash sales in the register history.",
     "Split payment integration: count only the net cash part of split-payment sales.",
-    "Excluding amounts not received: don't count store credit or change given back as register income.",
+    "Excluding amounts not received: don't count deferred amounts or change given back as register income.",
     "Expected balance: calculate the expected register balance from the initial balance, supplies, withdrawals and net income.",
     "Closing with a physical count: allow entering the physical count of available cash.",
     "Closing difference: show the difference between the expected balance and the counted amount.",
@@ -290,7 +290,7 @@ const requirementChaptersEn = [
     "Automatic closing: record the automatic closing of the register when the day changes.",
     "Register movements: allow looking up recorded movements, with date and amounts."
   ]],
-  ["9. Testers", [
+  ["Testers", [
     "Tester quantity: allow setting the number of testers linked to a product.",
     "Tester generation: generate the tester records for the defined quantity.",
     "Tester status: allow controlling the ACTIVE, RAN OUT and MISSING statuses.",
@@ -301,32 +301,32 @@ const requirementChaptersEn = [
     "Protecting inactive testers: prevent status changes on inactive testers.",
     "Problem testers lookup: show the total of testers marked RAN OUT or MISSING, counting only active records."
   ]],
-  ["10. Reports and current status", [
+  ["Reports and current status", [
     "Period filters: allow daily, weekly, monthly, yearly and custom-period reports.",
     "Operator filter: allow filtering reports by all operators or a specific one.",
     "Automatic refresh: refresh the reports when the filters change.",
     "Date navigation: allow moving between dates and periods with forward and back controls.",
     "Custom period: allow entering start and end dates for the lookup.",
-    "Receivables card: show pending card and installment receivables, without mixing them with store credit.",
+    "Receivables card: show pending card and installment receivables, without mixing them with deferred sales.",
     "Receivables by due date: allow looking up receivables grouped by due date.",
-    "Store credit card: show the total of open credit debts.",
-    "Store credit lookup: list open debts from oldest to newest and allow searching the records.",
+    "Deferred sales card: show the total of open deferred debts.",
+    "Deferred debt lookup: list open debts from oldest to newest and allow searching the records.",
     "Payment from the report: allow opening a debt's payment flow from the report.",
     "Receipt in a dialog: allow opening a sale's receipt from the records shown in the reports.",
     "Expiry card: allow looking up the details of products and batches flagged for expiry.",
     "Minimum stock card: allow looking up products below the minimum stock.",
     "Testers card: allow opening the details of problem testers.",
-    "Sales by payment method: show the breakdown of sales by payment method, with store credit as a separate category.",
-    "Amounts actually received: keep cash reports consistent with the net amounts actually received, without treating store credit or change as cash income."
+    "Sales by payment method: show the breakdown of sales by payment method, with deferred payment as a separate category.",
+    "Amounts actually received: keep cash reports consistent with the net amounts actually received, without treating deferred amounts or change as cash income."
   ]],
-  ["11. Indicators and profit analysis", [
+  ["Indicators and profit analysis", [
     "Unit profit on registration: automatically calculate unit profit when registering and editing products.",
     "Manager-only indicators: restrict the display of cost, profit, margin and markup on product cards to the manager profile.",
     "Profit card: show a profit card in the current status area of the reports.",
     "Profit filter: calculate the profit report indicators for the selected period and operator.",
     "Profit vs. cash: don't treat profit as cash entering the register.",
-    "Profit on credit sales: count a credit sale on the date the sale happens.",
-    "Later payment: don't count the sale's profit again when a credit debt is paid.",
+    "Profit on deferred sales: count a deferred sale on the date the sale happens.",
+    "Later payment: don't count the sale's profit again when a deferred debt is paid.",
     "Cancellation and profit: exclude canceled sales from the profit calculation.",
     "Discounts in the calculation: account for the discounts given when calculating item results.",
     "Profit report indicators: show profit, amount sold, cost, margin and loss indicators.",
@@ -338,14 +338,14 @@ const requirementChaptersEn = [
     "Receipt from the profit report: allow opening the sale's stored receipt from the profit report.",
     "Loss indicator: show the number of sales at a loss and the biggest loss in the period."
   ]],
-  ["12. Charts", [
+  ["Charts", [
     "Charts panel: provide a dedicated screen for viewing the system's indicators as charts.",
     "Sales indicators: allow viewing metrics such as total sales, revenue, items sold and cancellations.",
     "Time grouping: show the data grouped by day, week, month or year, depending on the selected mode.",
     "Period navigation: allow moving between time windows in the charts.",
     "Chart refresh: update the view when the period or lookup mode changes."
   ]],
-  ["13. Export, printing and backup", [
+  ["Export, printing and backup", [
     "Excel export: allow exporting the data provided by the system to an Excel file.",
     "Receipt printing: allow printing the sale receipt.",
     "Manual backup: allow creating a copy of the database in a location chosen by the user.",
@@ -462,7 +462,7 @@ const tourScreens = [
     description: { pt: "Abertura, sangria e fechamento", en: "Opening, withdrawals and closing" },
     images: [SCREENS_PATH + "cash-register-1.png", SCREENS_PATH + "cash-register-2.png"],
     points: [
-      { pt: "O saldo esperado considera só o dinheiro que entrou, sem fiado e sem troco.", en: "The expected balance only counts the cash that came in, without store credit or change." },
+      { pt: "O saldo esperado considera só o dinheiro que entrou, sem vendas a prazo e sem troco.", en: "The expected balance only counts the cash that came in, without deferred sales or change." },
       { pt: "Fechamento com contagem física e a diferença calculada na hora.", en: "Closing with a physical count and the difference calculated on the spot." },
       { pt: "Fecha sozinho na virada do dia, registrado como (AUTO).", en: "Closes on its own when the day changes, recorded as (AUTO)." }
     ]
@@ -477,7 +477,7 @@ const tourScreens = [
     ],
     points: [
       { pt: "Filtros por dia, semana, mês, ano ou período, e por operador.", en: "Filters by day, week, month, year or period, and by operator." },
-      { pt: "Recebíveis, fiado, lucro, estoque mínimo, validade e testers em cards.", en: "Receivables, store credit, profit, minimum stock, expiry and testers in cards." },
+      { pt: "Recebíveis, vendas a prazo, lucro, estoque mínimo, validade e testers em cards.", en: "Receivables, deferred sales, profit, minimum stock, expiry and testers in cards." },
       { pt: "Exportação para Excel e backup do banco com um clique.", en: "Excel export and database backup with one click." }
     ]
   },
@@ -496,11 +496,11 @@ const tourScreens = [
 // Textos do tour e da apresentação de vídeo em cada idioma.
 const interfaceLabels = {
   pt: {
-    tour: { zoom: "Ampliar imagem", enlarged: "Imagem ampliada", close: "Fechar", screen: "Tela de", part: "parte" },
+    tour: { zoom: "Ampliar imagem", enlarged: "Imagem ampliada", close: "Fechar", screen: "Tela de", part: "parte", tag: "Dados fictícios" },
     presentation: { moreLabel: "Ver mais", lessLabel: "Ver menos", highlightsLabel: "DESTAQUES DO VÍDEO", closeLabel: "Fechar apresentação" }
   },
   en: {
-    tour: { zoom: "Enlarge image", enlarged: "Enlarged image", close: "Close", screen: "Screen:", part: "part" },
+    tour: { zoom: "Enlarge image", enlarged: "Enlarged image", close: "Close", screen: "Screen:", part: "part", tag: "Fictional data" },
     presentation: { moreLabel: "See more", lessLabel: "See less", highlightsLabel: "VIDEO HIGHLIGHTS", closeLabel: "Close presentation" }
   }
 };

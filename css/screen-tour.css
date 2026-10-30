@@ -174,20 +174,90 @@
     gap: 5px;
 }
 
+/* Uma bolinha por print: enche de baixo para cima no tempo da tela */
 .tour-dots i {
-    width: 7px;
-    height: 7px;
+    position: relative;
+    width: 9px;
+    height: 9px;
+    overflow: hidden;
     border-radius: 50%;
     background: var(--st-border);
+    transition: box-shadow 0.4s ease;
 }
 
-.tour-dots i:first-child {
+.tour-dots b {
+    position: absolute;
+    inset: 0;
     background: var(--st-accent);
+    transform: scaleY(0);
+    transform-origin: bottom;
+}
+
+.tour-dots i.is-full b {
+    transform: scaleY(1);
+}
+
+/* Enchendo: brilho fraco */
+.tour-dots i.is-current {
+    box-shadow: 0 0 6px var(--st-accent-strong);
+}
+
+/* Print terminado: brilho forte, uma vez */
+.tour-dots i.is-flash {
+    animation: tour-dot-flash 0.7s ease-out;
+}
+
+@keyframes tour-dot-flash {
+    0% {
+        box-shadow: 0 0 0 0 var(--st-accent);
+        transform: scale(1);
+    }
+
+    30% {
+        box-shadow: 0 0 12px 4px var(--st-accent);
+        transform: scale(1.5);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 transparent;
+        transform: scale(1);
+    }
+}
+
+/* Nome em uma linha só: a barra não muda de altura ao trocar de tela */
+.tour-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .tour-counter {
     margin-left: auto;
     color: var(--st-accent);
+}
+
+.tour-counter:empty {
+    display: none;
+}
+
+/* Etiqueta opcional, à direita da barra */
+.tour-tag {
+    flex-shrink: 0;
+    margin-left: auto;
+    padding: 2px 6px;
+    border: 1px solid var(--st-border);
+    border-radius: 3px;
+    font-size: 8px;
+    letter-spacing: 0.8px;
+}
+
+.tour-tag:empty {
+    display: none;
+}
+
+.tour-tag:not(:empty) + .tour-counter {
+    margin-left: 0;
 }
 
 .tour-window {
@@ -232,11 +302,19 @@
     animation: tour-point-in 0.45s ease both;
 }
 
+/* Asterisco em SVG: o caractere ✳ vira emoji no celular */
 .tour-points li::before {
-    content: "✳";
+    --st-asterisk: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.7'%3E%3Cpath d='M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4'/%3E%3C/svg%3E");
+
+    content: "";
     position: absolute;
+    top: 0.45em;
     left: 0;
-    color: var(--st-accent);
+    width: 12px;
+    height: 12px;
+    background: var(--st-accent);
+    -webkit-mask: var(--st-asterisk) center / contain no-repeat;
+    mask: var(--st-asterisk) center / contain no-repeat;
 }
 
 @keyframes tour-point-in {
@@ -752,8 +830,23 @@
 }
 
 /* Fora da tela, as animações em loop param */
-.tour.is-offscreen .stickman * {
+.tour.is-offscreen .stickman *,
+.stickman-perch.is-offscreen .stickman * {
     animation-play-state: paused;
+}
+
+/* Bonequinho sentado na borda de um elemento, sem o tour
+   (data-stickman-perch, em js/screen-tour.js) */
+.stickman-perch {
+    --st-accent: var(--accent, #c6f36a);
+
+    position: absolute;
+    top: -43px;
+    right: 48px;
+    z-index: 3;
+    width: 30px;
+    height: 44px;
+    pointer-events: none;
 }
 
 /* ==========================================
@@ -955,27 +1048,66 @@
 
 /* ==========================================
    RESPONSIVIDADE
-   No celular, os cards ficam em coluna única
-   para o zigue-zague funcionar igual.
+   Até 900 px, os cards viram uma trilha numerada acima do
+   print, para o bonequinho e a tela caberem juntos.
+   O mesmo limite está em js/screen-tour.js (trackLayout).
    ========================================== */
 
 @media (max-width: 900px) {
     .tour {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 14px;
     }
 
     .tour-list {
-        padding-right: 24px;
-        padding-left: 24px;
+        flex-direction: row;
+        gap: 3px;
+        padding: 48px 10px 0;
+        counter-reset: tour-card;
+    }
+
+    .tour-list li {
+        flex: calc(var(--parts) + 0.6) 1 0;
+        min-width: 0;
+    }
+
+    .tour-card {
+        align-items: flex-start;
+        justify-content: center;
+        height: 30px;
+        padding: 0 0 0 10px;
+        counter-increment: tour-card;
+    }
+
+    /* O número substitui o texto, que fica só para leitores de tela.
+       O nome da tela aparece na barra da janela. */
+    .tour-card::after {
+        content: counter(tour-card);
+        position: relative;
+        z-index: 1;
+        color: var(--st-muted);
+        font-family: var(--st-mono);
+        font-size: 11px;
+        transition: color 0.4s ease;
+    }
+
+    .tour-card.is-active::after,
+    .tour-card.is-done::after {
+        color: var(--st-accent);
+    }
+
+    .tour-card strong,
+    .tour-card small {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
     }
 }
 
 @media (max-width: 600px) {
-    .tour-card {
-        padding: 12px 14px;
-    }
-
     .tour-device {
         padding: 0 5px 5px;
         border-radius: 9px;
@@ -994,6 +1126,7 @@
 @media (prefers-reduced-motion: reduce) {
     .stickman *,
     .flag-cloth,
+    .tour-dots i,
     .tour-glass,
     .tour-points li,
     .tour-lightbox-scroll {

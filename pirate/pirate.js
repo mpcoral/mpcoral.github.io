@@ -274,8 +274,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             name: "Jogador ou navio",
                             text:
                                 "O Break Hit Result entrega o ator atingido, e um OR compara a " +
-                                "classe dele com BP_Player e BP_Ship. Incluir o navio foi um " +
-                                "acréscimo meu, fora do curso, para ele também receber dano."
+                                "classe dele com BP_Player e BP_Ship, para que o jogador e o " +
+                                "navio possam receber dano."
                         },
                         {
                             name: "Apply Damage",
@@ -720,7 +720,7 @@ document.addEventListener("DOMContentLoaded", () => {
             highlights: [
                 ["Attack", "Starts a very short looping Timer, 0.01 seconds, that calls StartTrace many times during the animation, following the sword frame by frame."],
                 ["StartTrace", "Runs a Line Trace By Channel between two sockets on the sword, from the base to the tip, ignoring the enemy itself. That way, damage depends on the blade actually landing."],
-                ["Player or ship", "Break Hit Result returns the actor that was hit, and an OR compares its class with BP_Player and BP_Ship. Including the ship was my own addition, outside the course, so it also takes damage."],
+                ["Player or ship", "Break Hit Result returns the actor that was hit, and an OR compares its class with BP_Player and BP_Ship, so both the player and the ship can take damage."],
                 ["Apply Damage", "Deals 20 damage to the actor that was hit. On the ship, the damage wears down its health, and when it reaches zero the match ends in defeat."]
             ]
         },
@@ -933,7 +933,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 label: item.label,
                 number: item.number,
                 total: String(system.videos.length),
-                footer: "MIGUEL CORAL · UNREAL ENGINE 5"
+                footer: "MIGUEL PEDRO · UNREAL ENGINE 5"
             });
 
             const source = document.createElement("source");

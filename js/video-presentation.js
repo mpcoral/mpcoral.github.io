@@ -66,7 +66,7 @@
  *   }, elemento);
  *
  *   // Textos padrão usados quando o vídeo não define o seu:
- *   VideoPresentation.setDefaults({ footer: "MIGUEL CORAL" });
+ *   VideoPresentation.setDefaults({ footer: "MIGUEL PEDRO" });
  *
  * ------------------------------------------
  * 4. (OPCIONAL) CORES E FONTES

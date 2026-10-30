@@ -14,6 +14,13 @@
  *   chuta o vidro, o vidro racha e estoura, e o print troca.
  * - Depois do último card ele comemora, as bandeiras somem e
  *   tudo recomeça.
+ * - A barra da janela tem uma bolinha por print: ela enche no
+ *   tempo da tela e dá um brilho quando o print termina.
+ *
+ * No celular e no tablet (até 900 px), os cards viram uma trilha
+ * numerada logo acima do print, para os dois caberem juntos na tela.
+ * Nela ele anda só para a direita, espera com a tela à mostra e
+ * pula de um trecho para o outro.
  *
  * ------------------------------------------
  * 1. INCLUA OS ARQUIVOS NA PÁGINA
@@ -60,6 +67,8 @@
  *       labels: { zoom: "Enlarge image", close: "Close", screen: "Screen:" }
  *   });
  *
+ *   // labels.tag mostra uma etiqueta na barra da janela (ex.: "Dados fictícios").
+ *
  *   // Troca nomes, descrições e destaques sem reiniciar o passeio:
  *   tour.update(telasEmOutroIdioma, rotulosEmOutroIdioma);
  *
@@ -71,6 +80,17 @@
  *   quando existem. Para trocar só no tour:
  *
  *   #screen-tour { --st-accent: #ff8a3d; }
+ *
+ * ------------------------------------------
+ * 6. (OPCIONAL) BONEQUINHO SENTADO
+ * ------------------------------------------
+ *
+ *   Sem o tour, ele só senta na borda de um elemento, balança as
+ *   pernas e faz gracinhas. O elemento precisa de position: relative.
+ *
+ *   <a class="card" data-stickman-perch>...</a>
+ *
+ *   Para mudar o lugar: .card .stickman-perch { right: 80px; }
  */
 
 (() => {
@@ -90,10 +110,25 @@
     // Distância entre o bonequinho e a borda do card ao começar a andar.
     const EDGE_MARGIN = 6;
 
+    // Trilha do celular: velocidade da caminhada (px/s), quanto ele
+    // ocupa do trecho anterior ao pousar e a altura do pulo entre trechos.
+    const TRACK_SPEED = 45;
+    const TRACK_OVERHANG = 8;
+    const TRACK_JUMP_HEIGHT = 26;
+
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Mesmo limite do CSS (css/screen-tour.css, seção RESPONSIVIDADE).
+    const trackLayout = window.matchMedia("(max-width: 900px)");
 
     // Erro usado para interromper o passeio quando um card é clicado.
     const CANCELLED = Symbol("cancelled");
+
+    // Sentado há um tempo, ele faz gracinhas, uma de cada vez.
+    const TRICKS = ["is-trick-wave", "is-trick-flex", "is-trick-double"];
+    const TRICK_FIRST_DELAY = 2500;
+    const TRICK_DURATION = 2400;
+    const TRICK_GAP = 2200;
 
     // ==========================================
     // DESENHOS (SVG)
@@ -178,6 +213,62 @@
     `;
 
     // ==========================================
+    // GRACINHAS E BONEQUINHO SENTADO
+    // ==========================================
+
+    // Alterna as gracinhas de um bonequinho sentado.
+    function createTricks(stickman) {
+        let timer = null;
+        let next = 0;
+
+        function stop() {
+            clearTimeout(timer);
+            timer = null;
+            stickman.classList.remove(...TRICKS);
+        }
+
+        function schedule(delay) {
+            timer = setTimeout(() => {
+                const trick = TRICKS[next];
+
+                next = (next + 1) % TRICKS.length;
+                stickman.classList.add(trick);
+
+                timer = setTimeout(() => {
+                    stickman.classList.remove(trick);
+                    schedule(TRICK_GAP);
+                }, TRICK_DURATION);
+            }, delay);
+        }
+
+        return { stop, schedule, isScheduled: () => timer !== null };
+    }
+
+    // Senta o bonequinho na borda de cima de um elemento.
+    function perch(element) {
+        const seat = document.createElement("div");
+
+        seat.className = "stickman-perch";
+        seat.setAttribute("aria-hidden", "true");
+        seat.innerHTML = `<div class="stickman is-visible is-sitting">${STICKMAN_SVG}</div>`;
+        element.appendChild(seat);
+
+        const tricks = createTricks(seat.firstElementChild);
+
+        // Só se mexe enquanto está à vista.
+        new IntersectionObserver((entries) => {
+            const isVisible = entries[0].isIntersecting;
+
+            seat.classList.toggle("is-offscreen", !isVisible);
+            tricks.stop();
+
+            if (isVisible && !reduceMotion) {
+                tricks.schedule(TRICK_FIRST_DELAY);
+            }
+        }).observe(seat);
+    }
+
+    // ==========================================
     // CRIA O TOUR
     // ==========================================
 
@@ -188,7 +279,8 @@
         enlarged: "Imagem ampliada",
         close: "Fechar",
         screen: "Tela de",
-        part: "parte"
+        part: "parte",
+        tag: ""
     };
 
     function create(root, screens, options = {}) {
@@ -206,8 +298,9 @@
             <div class="tour-stage">
                 <div class="tour-device">
                     <div class="tour-bar">
-                        <span class="tour-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <span class="tour-dots" aria-hidden="true"></span>
                         <span class="tour-name"></span>
+                        <span class="tour-tag"></span>
                         <span class="tour-counter"></span>
                     </div>
                     <button class="tour-window" type="button" title="${labels.zoom}"></button>
@@ -227,12 +320,16 @@
         const stage = root.querySelector(".tour-stage");
         const windowButton = root.querySelector(".tour-window");
         const nameLabel = root.querySelector(".tour-name");
+        const dotList = root.querySelector(".tour-dots");
+        const tag = root.querySelector(".tour-tag");
         const counter = root.querySelector(".tour-counter");
         const points = root.querySelector(".tour-points");
         const stickman = root.querySelector(".stickman");
         const figure = stickman.querySelector("svg");
         const lightbox = root.querySelector(".tour-lightbox");
         const lightboxScroll = root.querySelector(".tour-lightbox-scroll");
+
+        tag.textContent = labels.tag;
 
         // Estado do passeio
         let current = -1;       // card ativo
@@ -280,6 +377,9 @@
 
             card.classList.toggle("is-reverse", direction(index) < 0);
 
+            // Na trilha, cada card ocupa espaço conforme o número de prints.
+            item.style.setProperty("--parts", screen.images.length);
+
             card.querySelector("strong").textContent = screen.name;
             card.querySelector("small").textContent = screen.description || "";
 
@@ -311,8 +411,9 @@
         }
 
         // Cards pares andam para a direita; ímpares, para a esquerda.
+        // Na trilha, sempre para a direita.
         function direction(index) {
-            return index % 2 === 0 ? 1 : -1;
+            return trackLayout.matches || index % 2 === 0 ? 1 : -1;
         }
 
         // Onde os pés tocam a borda de cima do card.
@@ -323,6 +424,10 @@
         function startX(index) {
             const box = cardBox(index);
 
+            if (trackLayout.matches) {
+                return box.left - TRACK_OVERHANG;
+            }
+
             return direction(index) > 0
                 ? box.left + EDGE_MARGIN
                 : box.right - EDGE_MARGIN - stickman.offsetWidth;
@@ -330,6 +435,10 @@
 
         function endX(index) {
             const box = cardBox(index);
+
+            if (trackLayout.matches) {
+                return box.right - stickman.offsetWidth;
+            }
 
             return direction(index) > 0
                 ? box.right - EDGE_MARGIN - stickman.offsetWidth
@@ -461,7 +570,7 @@
         async function jump(index, token) {
             const x = startX(index);
             const y = groundY(index);
-            const peak = Math.min(position.y, y) - 70;
+            const peak = Math.min(position.y, y) - (trackLayout.matches ? TRACK_JUMP_HEIGHT : 70);
 
             face(x >= position.x ? 1 : -1);
             stickman.classList.add("is-jumping");
@@ -640,10 +749,39 @@
                 (screen.images.length > 1 ? `, ${labels.part} ${part + 1}` : "");
         }
 
+        // Bolinhas da barra: uma por print da tela atual.
+        function dots() {
+            return [...dotList.children];
+        }
+
+        function markDots(part) {
+            dots().forEach((dot, dotIndex) => {
+                dot.classList.toggle("is-full", dotIndex < part || (reduceMotion && dotIndex === part));
+                dot.classList.toggle("is-current", dotIndex === part);
+            });
+        }
+
+        // Enche no tempo do print, pausando junto com o passeio.
+        function fillDot(part, duration, token) {
+            return play(dots()[part].firstElementChild, [
+                { transform: "scaleY(0)" },
+                { transform: "scaleY(1)" }
+            ], { duration, fill: "forwards" }, token);
+        }
+
+        // Print terminado: brilho forte, uma vez.
+        function flashDot(part) {
+            const dot = dots()[part];
+
+            dot.classList.remove("is-current");
+            dot.classList.add("is-full", "is-flash");
+        }
+
         function showScreen(index) {
             const screen = screens[index];
 
             nameLabel.textContent = screen.name.toUpperCase();
+            dotList.innerHTML = "<i><b></b></i>".repeat(screen.images.length);
 
             points.replaceChildren(...(screen.points || []).map((text, pointIndex) => {
                 const point = document.createElement("li");
@@ -663,6 +801,7 @@
 
             currentPart = part;
             lightCards(index, part);
+            markDots(part);
 
             image.className = "tour-image";
             image.src = screen.images[part];
@@ -707,15 +846,33 @@
 
                 const distance = Math.abs(target - position.x);
                 const full = Math.abs(to - from) / parts;
+                const walkTime = PRINT_DURATION * Math.min(1, distance / full);
 
-                await walk(target, PRINT_DURATION * Math.min(1, distance / full), token);
+                if (trackLayout.matches) {
+                    // Na trilha o trecho é curto demais para durar o tempo todo:
+                    // ele espera com a tela à mostra e só então anda.
+                    const trackWalkTime = Math.min(distance / TRACK_SPEED * 1000, PRINT_DURATION / 2);
+
+                    await Promise.all([
+                        fillDot(part, PRINT_DURATION, token),
+                        hold(PRINT_DURATION - trackWalkTime, token)
+                            .then(() => walk(target, trackWalkTime, token))
+                    ]);
+                } else {
+                    await Promise.all([
+                        fillDot(part, walkTime, token),
+                        walk(target, walkTime, token)
+                    ]);
+                }
 
                 if (!isLast) {
                     await breakWall(walls[0], token);
+                    flashDot(part);
                     showPart(index, part + 1);
                 }
             }
 
+            flashDot(parts - 1);
             await plantFlag(index, token);
         }
 
@@ -789,6 +946,9 @@
                         await celebrate(token);
                         card = 0;
                         mode = "drop";
+                    } else if (trackLayout.matches) {
+                        card += 1;
+                        mode = "jump";
                     } else {
                         await stepOff(card, token);
                         card += 1;
@@ -806,34 +966,7 @@
         // PAUSA: O BONEQUINHO SENTA E ESPERA
         // ------------------------------------------
 
-        // Sentado há um tempo, ele faz gracinhas, uma de cada vez.
-        const TRICKS = ["is-trick-wave", "is-trick-flex", "is-trick-double"];
-        const TRICK_FIRST_DELAY = 2500;
-        const TRICK_DURATION = 2400;
-        const TRICK_GAP = 2200;
-
-        let trickTimer = null;
-        let nextTrick = 0;
-
-        function stopTricks() {
-            clearTimeout(trickTimer);
-            trickTimer = null;
-            stickman.classList.remove(...TRICKS);
-        }
-
-        function scheduleTrick(delay) {
-            trickTimer = setTimeout(() => {
-                const trick = TRICKS[nextTrick];
-
-                nextTrick = (nextTrick + 1) % TRICKS.length;
-                stickman.classList.add(trick);
-
-                trickTimer = setTimeout(() => {
-                    stickman.classList.remove(trick);
-                    scheduleTrick(TRICK_GAP);
-                }, TRICK_DURATION);
-            }, delay);
-        }
+        const tricks = createTricks(stickman);
 
         // ------------------------------------------
         // SENTAR E LEVANTAR COM TRANSIÇÃO
@@ -897,19 +1030,19 @@
                 changePose(() => stickman.classList.add("is-sitting"), reduceMotion ? 0 : SIT_DURATION);
             } else if (standsUp) {
                 changePose(() => {
-                    stopTricks();
+                    tricks.stop();
                     stickman.classList.remove("is-sitting");
                 }, reduceMotion ? 0 : STAND_DURATION);
             }
 
             // Só faz gracinhas se estiver sentado e à vista.
             if (isPaused && isVisible && !reduceMotion) {
-                if (!wasSitting || trickTimer === null) {
-                    stopTricks();
-                    scheduleTrick(TRICK_FIRST_DELAY);
+                if (!wasSitting || !tricks.isScheduled()) {
+                    tricks.stop();
+                    tricks.schedule(TRICK_FIRST_DELAY);
                 }
             } else {
-                stopTricks();
+                tricks.stop();
             }
 
             clearTimeout(resumeTimer);
@@ -976,7 +1109,8 @@
         });
 
         lightbox.addEventListener("close", () => {
-            isPaused = stage.matches(":hover");
+            // No toque, o :hover fica preso depois de fechar a imagem.
+            isPaused = window.matchMedia("(hover: hover)").matches && stage.matches(":hover");
             updatePause();
         });
 
@@ -1002,12 +1136,21 @@
         lightCards(-1, 0);
 
         // Com a página redimensionada, recomeça o card atual.
+        // Só a largura conta: no celular, a barra do navegador muda a
+        // altura da tela ao rolar a página.
         let resizeTimer = null;
+        let lastWidth = window.innerWidth;
 
         window.addEventListener("resize", () => {
+            if (window.innerWidth === lastWidth) {
+                return;
+            }
+
+            lastWidth = window.innerWidth;
             clearTimeout(resizeTimer);
 
             resizeTimer = setTimeout(() => {
+                cards.forEach((card, index) => card.classList.toggle("is-reverse", direction(index) < 0));
                 flags.forEach((flag, index) => placeFlag(index));
 
                 if (hasStarted && current >= 0) {
@@ -1025,6 +1168,7 @@
             if (nextLabels) {
                 labels = { ...labels, ...nextLabels };
 
+                tag.textContent = labels.tag;
                 windowButton.title = labels.zoom;
                 lightbox.setAttribute("aria-label", labels.enlarged);
                 root.querySelector(".tour-lightbox-close").setAttribute("aria-label", labels.close);
@@ -1064,6 +1208,8 @@
 
         return { update };
     }
+
+    document.querySelectorAll("[data-stickman-perch]").forEach(perch);
 
     window.ScreenTour = { create };
 })();

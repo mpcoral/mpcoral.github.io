@@ -254,6 +254,41 @@ html {
 }
 
 /* ==========================================
+   ÍCONES
+   ========================================== */
+
+/* Desenhados em SVG porque caracteres como ↗ e ✳ viram emoji no celular.
+   Herdam a cor do texto. */
+.icon-arrow,
+.icon-asterisk {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    background: currentColor;
+    -webkit-mask: var(--icon) center / contain no-repeat;
+    mask: var(--icon) center / contain no-repeat;
+}
+
+.icon-arrow {
+    --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.7'%3E%3Cpath d='M3.5 12.5 12 4M5 4h7v7'/%3E%3C/svg%3E");
+}
+
+/* Mesma flecha, apontando para baixo */
+.icon-arrow-down {
+    transform: rotate(90deg);
+}
+
+/* Mesma flecha, apontando para trás (botões de voltar) */
+.icon-arrow-back {
+    transform: rotate(-135deg);
+}
+
+.icon-asterisk {
+    --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.7'%3E%3Cpath d='M8 2v12M2 8h12M3.8 3.8l8.4 8.4M12.2 3.8l-8.4 8.4'/%3E%3C/svg%3E");
+}
+
+/* ==========================================
    BOTÕES E LINKS DE AÇÃO
    ========================================== */
 
@@ -512,6 +547,17 @@ html {
         justify-content: flex-start;
         gap: 13px 22px;
         flex-wrap: wrap;
+    }
+
+    /* Botão de idioma sempre no alto, à direita, nos dois idiomas */
+    .header-inner {
+        position: relative;
+    }
+
+    .lang-toggle {
+        position: absolute;
+        top: 4px;
+        right: 0;
     }
 
     .section {
